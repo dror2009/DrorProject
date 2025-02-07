@@ -1,0 +1,518 @@
+﻿/* Reset Styles */
+body, h1, h2, h3, p, ul, li, form, input {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a, a:visited {
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+/* Body Styling */
+body {
+    padding-top: 50px; /* Match the menu height exactly */
+    padding-bottom: 60px; /* Match the footer height */
+    margin: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #e9ecef; /* Light gray background for overall contrast */
+}
+
+/* Navigation Menu Container */
+.menu-container {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    background-color: #007BFF;
+    margin: 0;
+    padding: 10px 20px; /* Add padding for spacing */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for aesthetics */
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center everything by default */
+}
+
+.welcome h4 {
+    margin: 0;
+    margin-right: 60px;
+    color: #fff;
+    font-size: 1rem;
+    position: absolute; /* Position Guest text separately */
+    right: 20px; /* Adjust distance from the right edge */
+    top: 50%; /* Center vertically relative to container */
+    transform: translateY(-50%); /* Adjust for vertical centering */
+}
+
+.welcome a {
+    text-decoration: none;
+    color: #fff;
+}
+
+    .welcome a:hover {
+        text-decoration: underline;
+    }
+
+.navigation-menu {
+    list-style-type: none;
+    display: flex; /* Flexbox for horizontal layout */
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Navigation Menu */
+.navigation-menu {
+    list-style-type: none;
+    display: flex; /* Flexbox for horizontal layout */
+    margin: 0; /* Remove default margins */
+    padding: 0; /* Remove padding */
+    position: relative; /* Allows absolute positioning of Guest text */
+}
+
+    .navigation-menu li {
+        margin: 0 15px; /* Add spacing between menu items */
+    }
+
+        .navigation-menu li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+            .navigation-menu li a:hover {
+                text-decoration: underline;
+            }
+
+
+/* General Content Styling for All Pages */
+.page-content {
+    margin: 20px auto; /* Center the content */
+    padding: 20px;
+    max-width: 1200px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    .page-content h1 {
+        font-size: 2rem;
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .page-content ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 20px 0;
+    }
+
+        .page-content ul li {
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+
+            .page-content ul li a {
+                text-decoration: none; /* Remove underline from links */
+                color: #007BFF; /* Blue color for links */
+                font-size: 1.1rem; /* Slightly larger font size */
+                font-weight: bold; /* Make the text bold */
+                display: block; /* Make the entire list item clickable */
+            }
+
+            .page-content ul li:hover {
+                background-color: #f0f8ff; /* Light blue background on hover */
+                transform: translateY(-2px); /* Slight lift on hover for interactivity */
+            }
+
+                .page-content ul li:hover a {
+                    color: #0056b3; /* Darker blue for the text on hover */
+                }
+
+    .page-content p {
+        font-size: 1.1rem !important; /* Slightly larger font for readability */
+        color: #444 !important; /* Dark gray for better contrast */
+        line-height: 1.8 !important; /* Comfortable line spacing */
+        margin-bottom: 20px !important; /* Add space below paragraphs */
+        text-align: justify !important; /* Justify text for a polished look */
+        padding: 5px !important; /* Small padding for better spacing */
+    }
+
+    .page-content h3 {
+        font-size: 1.5rem; /* Larger font size for emphasis */
+        color: #007BFF; /* Blue color for consistency with the theme */
+        margin-bottom: 15px; /* Add spacing below headers */
+        border-bottom: 2px solid #ddd; /* Add an underline for separation */
+        padding-bottom: 5px; /* Padding to create space between text and border */
+        text-transform: uppercase; /* Uppercase for a bold and structured look */
+        letter-spacing: 1px; /* Slight letter spacing for readability */
+    }
+
+
+
+.form-page-content {
+    margin: 20px auto; /* Center the content */
+    padding: 20px; /* Add consistent spacing around the content */
+    max-width: 500px; /* Limit the width for better readability */
+    background-color: #f8f9fa; /* Light background for contrast */
+    border-radius: 8px; /* Add rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for aesthetics */
+}
+
+    .form-page-content h1 {
+        font-size: 2rem;
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+/* Input Fields for Forms */
+form input[type="text"],
+form input[type="password"],
+form input[type="email"],
+form input[type="submit"],
+form input[type="number"],
+form select {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    font-size: 1rem;
+}
+
+form select {
+    background-color: #fff;
+    appearance: none;
+    cursor: pointer;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A//www.w3.org/2000/svg%22 viewBox%3D%220 0 4 5%22%3E%3Cpath fill%3D%22%23333%22 d%3D%22M2 0L0 2h4zm0 5L0 3h4z%22/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 8px 10px;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+    form button:hover {
+        background-color: #0056b3;
+    }
+
+/* Footer Styling */
+.footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 25px; /* Explicitly set the footer height */
+    z-index: 1000;
+}
+
+    .footer a {
+        color: white;
+        font-weight: bold;
+        font-size: 1rem;
+        margin: 0 10px;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+        .footer a:hover {
+            color: #ffd700; /* Gold on hover */
+            text-decoration: underline;
+        }
+
+
+/* Stock Page Styling */
+.stock-page {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 20px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    .stock-page h1 {
+        color: #007BFF;
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .stock-page h2 {
+        font-size: 1.7rem;
+        color: #0056b3;
+        margin-bottom: 15px;
+        padding-bottom: 5px;
+        border-bottom: 2px solid #ddd;
+        text-transform: capitalize;
+        font-weight: bold;
+    }
+
+    .stock-page h3 {
+        font-size: 1.5rem;
+        color: #007BFF;
+        margin-bottom: 10px;
+        padding-bottom: 3px;
+        border-bottom: 1px solid #ddd;
+        font-weight: 600;
+        text-transform: capitalize;
+    }
+
+    .stock-page h4 {
+        font-size: 1.2rem;
+        color: #007BFF;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 5px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .stock-page p {
+        font-size: 1.1rem !important;
+        color: #444 !important;
+        line-height: 1.8 !important;
+        margin-bottom: 20px !important;
+        text-align: justify !important;
+        padding: 5px !important;
+    }
+
+.stock-list {
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 5px;
+    list-style: none;
+}
+
+    .stock-list li {
+        padding: 5px 10px;
+        border-bottom: 1px solid #f1f1f1;
+        font-size: 1rem;
+        color: #333;
+    }
+
+        .stock-list li:last-child {
+            border-bottom: none;
+        }
+
+/* Style for the collapsible button */
+.collapsible {
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+    .collapsible:after {
+        content: "\25BC"; /* Downward arrow */
+        float: right;
+    }
+
+    .collapsible.active:after {
+        content: "\25B2"; /* Upward arrow */
+    }
+
+/* Style for the collapsible content */
+.content {
+    display: none;
+    overflow: hidden;
+}
+
+/* Graph and list placeholders */
+.graph-placeholder {
+    height: 300px;
+    background-color: #e9ecef;
+    border: 2px dashed #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .stock-page {
+        padding: 10px;
+        max-width: 95%;
+    }
+
+        .stock-page h1 {
+            font-size: 1.5rem;
+        }
+
+        .stock-page h2, .stock-page h3 {
+            font-size: 1.2rem;
+        }
+}
+
+
+
+/* General Content Styling for All Pages */
+.update-page-content {
+    margin: 20px auto; /* Center the content */
+    padding: 20px; /* Add consistent spacing around the content */
+    max-width: 600px; /* Limit the width for better readability */
+    background-color: #f8f9fa; /* Light background for contrast */
+    border-radius: 8px; /* Add rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for aesthetics */
+}
+
+    .update-page-content h1 {
+        font-size: 2rem;
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .update-page-content ul {
+        list-style-type: none; /* Remove default bullet points */
+        padding: 0; /* Remove default padding */
+        margin: 20px 0; /* Add spacing around the list */
+    }
+
+        .update-page-content ul li {
+            background-color: #ffffff; /* White background for each list item */
+            margin: 10px 0; /* Add spacing between list items */
+            padding: 10px 15px; /* Add padding for a consistent layout */
+            border: 1px solid #ddd; /* Subtle border for definition */
+            border-radius: 5px; /* Rounded corners for a modern look */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+            transition: background-color 0.3s, transform 0.2s; /* Smooth hover effects */
+        }
+
+            .update-page-content ul li a {
+                text-decoration: none; /* Remove underline from links */
+                color: #007BFF; /* Blue color for links */
+                font-size: 1.1rem; /* Slightly larger font size */
+                font-weight: bold; /* Make the text bold */
+                display: block; /* Make the entire list item clickable */
+            }
+
+            .update-page-content ul li:hover {
+                background-color: #f0f8ff; /* Light blue background on hover */
+                transform: translateY(-2px); /* Slight lift on hover for interactivity */
+            }
+
+                .update-page-content ul li:hover a {
+                    color: #0056b3; /* Darker blue for the text on hover */
+                }
+
+    .update-page-content p {
+        font-size: 1.1rem !important; /* Slightly larger font for readability */
+        color: #444 !important; /* Dark gray for better contrast */
+        line-height: 1.8 !important; /* Comfortable line spacing */
+        margin-bottom: 20px !important; /* Add space below paragraphs */
+        text-align: justify !important; /* Justify text for a polished look */
+        padding: 5px !important; /* Small padding for better spacing */
+    }
+
+    .update-page-content h3 {
+        font-size: 1.5rem; /* Larger font size for emphasis */
+        color: #007BFF; /* Blue color for consistency with the theme */
+        margin-bottom: 15px; /* Add spacing below headers */
+        border-bottom: 2px solid #ddd; /* Add an underline for separation */
+        padding-bottom: 5px; /* Padding to create space between text and border */
+        text-transform: uppercase; /* Uppercase for a bold and structured look */
+        letter-spacing: 1px; /* Slight letter spacing for readability */
+    }
+
+
+.dropdown-menu {
+    display: none;
+    position: absolute; /* Allows positioning relative to the page */
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1000;
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    min-width: 150px; /* Minimum width for the menu */
+}
+
+    .dropdown-menu.show {
+        display: block; /* Display the menu when toggled */
+    }
+
+    .dropdown-menu ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+        .dropdown-menu ul li {
+            margin: 5px 0;
+        }
+
+            .dropdown-menu ul li a {
+                text-decoration: none;
+                color: #333;
+                display: block;
+                padding: 5px 10px;
+                border-radius: 3px;
+            }
+
+                .dropdown-menu ul li a:hover {
+                    background-color: #f1f1f1;
+                    color: #007BFF;
+                }
+
+.chart-controls {
+    margin: 20px;
+}
+
+    .chart-controls button {
+        margin: 5px;
+        padding: 10px 15px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .chart-controls button:hover {
+            background-color: #e0e0e0;
+        }
+
+.chart-container {
+    width: 80%;
+    max-width: 900px;
+}

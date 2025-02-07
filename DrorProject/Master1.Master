@@ -1,0 +1,39 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Master1.master.cs" Inherits="DrorProject.Master1" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="~/css/style.css" />
+    <script src="/scripts/masterMenu.js"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <!--Header-->
+    <div class="menu-container">
+        <ul class="navigation-menu">
+            <li><a href="/pages/main.aspx">Main</a></li>
+            <li><a href="/pages/wallstreet.aspx">Wall Street</a></li>
+        </ul>
+        <div class="welcome" onclick="toggleMenu()">
+            <h4 id="welcome-message"><a><%=welcome %></a></h4>
+        </div>
+        <div id="dropdown-menu" class="dropdown-menu">
+            <!-- Menu content will be dynamically populated -->
+        </div>
+    </div>
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    <!--Footer-->
+    <div class="footer">
+        <div class="footer-links">
+            <a href="https://finance.yahoo.com/" target="_blank">Yahoo Finance</a>
+            <a href="https://www.google.com/finance/" target="_blank">Google Finance</a>
+        </div>
+    </div>
+</body>
+</html>
