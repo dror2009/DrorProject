@@ -93,6 +93,7 @@
             </div>
 
             <p id="statusMessage"></p>
+            <button onclick="goDown()">Scroll down</button>
         </div>
 
         <script>
@@ -110,19 +111,23 @@
                     data.forEach(msg => {
                         messageList.append(`<li><strong>${msg.Username}:</strong> ${msg.Message} <span>(${msg.Timestamp})</span></li>`);
                     });
-
-                    // Scroll to the bottom after loading messages
-                    messageList.scrollTop(messageList[0].scrollHeight);
                 });
             }
-
+            function goDown() {
+                var messagesListId = "<%= messagesList.ClientID %>";
+                var messageList = $("#" + messagesListId);
+                messageList.scrollTop(messageList[0].scrollHeight);
+            }
             function sendMessage() {
+                var messagesListId = "<%= messagesList.ClientID %>";
+                var messageList = $("#" + messagesListId);
                 var message = $("#messageInput").val();
                 if (message.trim() !== "") {
                     $.post("/ashx/chatHandler.ashx?action=sendMessage", { Message: message }, function (response) {
                         $("#statusMessage").text(response);
                         $("#messageInput").val('');
                         loadMessages();
+                        messageList.scrollTop(messageList[0].scrollHeight);
                     });
                 } else {
                     $("#statusMessage").text("❌ Message cannot be empty.");
@@ -141,10 +146,10 @@
                 loadMessages();
                 setTimeout(() => {
                     var messageList = $("#" + "<%= messagesList.ClientID %>");
+                    messageList.scrollTop(messageList[0].scrollHeight);
+                }, 500); // Ensures it scrolls after messages load
+            });
             messageList.scrollTop(messageList[0].scrollHeight);
-        }, 500); // Ensures it scrolls after messages load
-    });
-
             setInterval(loadMessages, 2000);
         </script>
 
