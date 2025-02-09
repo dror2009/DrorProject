@@ -12,12 +12,15 @@ namespace DrorProject
 
         protected void Application_Start(object sender, EventArgs e)
         {
-
+            Application["connections"] = 0;
         }
 
         protected void Session_Start(object sender, EventArgs e)
         {
             Session["loggedUser"] = null;
+            Application.Lock();
+            Application["connections"] = (int)Application["connections"]+1;
+            Application.UnLock();
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
@@ -37,7 +40,9 @@ namespace DrorProject
 
         protected void Session_End(object sender, EventArgs e)
         {
-
+            Application.Lock();
+            Application["connections"] = (int)Application["connections"] - 1;
+            Application.UnLock();
         }
 
         protected void Application_End(object sender, EventArgs e)

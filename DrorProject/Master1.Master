@@ -16,6 +16,10 @@
         <ul class="navigation-menu">
             <li><a href="/pages/main.aspx">Main</a></li>
             <li><a href="/pages/wallstreet.aspx">Wall Street</a></li>
+            <%if (Session["loggedUser"] != null)
+                {%>
+            <li><a href="/pages/chat.aspx">Chat</a></li>
+            <%} %>
         </ul>
         <div class="welcome" onclick="toggleMenu()">
             <h4 id="welcome-message"><a><%=welcome %></a></h4>

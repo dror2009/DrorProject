@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="chat.aspx.cs" Inherits="DrorProject.pages.chat" %>
+﻿<%@ Page Title="Chat" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="chat.aspx.cs" Inherits="DrorProject.pages.chat" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

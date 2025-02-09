@@ -23,7 +23,6 @@ function populateMenu() {
     if (document.getElementById("welcome-message").textContent.includes("Welcome, ")) {
         menu.innerHTML += `<ul>
             <li><a href="/pages/update/userpage.aspx">Profile</a></li>
-            <li><a href="/pages/chat.aspx">Chat</a></li>
             <li><a href="#" onclick="logout()">Logout</a></li>
         </ul>`;
     } else {
