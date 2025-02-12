@@ -10,7 +10,7 @@ namespace DrorProject.pages.admin
 {
     public partial class printDB : System.Web.UI.Page
     {
-        public string dbName = "DB.mdf";
+        private string dbName = "DB.mdf";
         string access;
         public string Users = "";
         protected void Page_Load(object sender, EventArgs e)

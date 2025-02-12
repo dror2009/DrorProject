@@ -12,7 +12,7 @@ namespace DrorProject.pages.update
     {
         public string data = "";
         public string message = "";
-        public string dbName = "DB.mdf";
+        private string dbName = "DB.mdf";
 
         public string oldUName;
         public string oldFName;

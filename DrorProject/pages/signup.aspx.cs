@@ -10,7 +10,7 @@ namespace DrorProject.pages
     public partial class signup : System.Web.UI.Page
     {
         public string message = "no user";
-        public string dbName = "DB.mdf";
+        private string dbName = "DB.mdf";
         public string insert = "";
         protected void Page_Load(object sender, EventArgs e)
         {

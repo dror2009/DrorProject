@@ -86,14 +86,14 @@
     <div class="page-content">
         <div class="chat-container">
             <ul id="messagesList" class="chat" runat="server"></ul>
-
+            <button onclick="goDown()">Scroll down</button>
             <div class="chat-input-container">
                 <input type="text" id="messageInput" placeholder="Type a message..." maxlength="200" />
                 <button onclick="sendMessage()">📩 Send</button>
             </div>
 
             <p id="statusMessage"></p>
-            <button onclick="goDown()">Scroll down</button>
+
         </div>
 
         <script>
@@ -132,6 +132,7 @@
                 } else {
                     $("#statusMessage").text("❌ Message cannot be empty.");
                 }
+                goDown();
             }
 
             // Send message when pressing "Enter"
