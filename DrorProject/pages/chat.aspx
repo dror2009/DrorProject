@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/scripts/userTracker.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -93,6 +94,8 @@
             </div>
 
             <p id="statusMessage"></p>
+            <h2 id="userCount">👥 Connected users: 0</h2>
+
 
         </div>
 

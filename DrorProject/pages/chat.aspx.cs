@@ -19,7 +19,6 @@ namespace DrorProject.pages
             {
                 Response.Redirect("~/pages/main.aspx");
             }
-
         }
         protected void LoadMessages()
         {

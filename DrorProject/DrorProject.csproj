@@ -109,12 +109,16 @@
     <Content Include="scripts\list\tabiomed.js" />
     <Content Include="scripts\list\taRealEstate.js" />
     <Content Include="scripts\masterMenu.js" />
+    <Content Include="scripts\userTracker.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\HelperA.cs" />
     <Compile Include="ashx\chatHandler.ashx.cs">
       <DependentUpon>chatHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\userTracker.ashx.cs">
+      <DependentUpon>userTracker.ashx</DependentUpon>
     </Compile>
     <Compile Include="ChatController.cs" />
     <Compile Include="Global.asax.cs">
@@ -248,6 +252,7 @@
     <Content Include="Master1.Master" />
     <Content Include="ashx\logout.ashx" />
     <Content Include="ashx\chatHandler.ashx" />
+    <Content Include="ashx\userTracker.ashx" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
