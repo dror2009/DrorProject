@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DrorProject.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -26,6 +27,7 @@ namespace DrorProject.pages
                     {
                         message = "Welcome, " + username;
                         Session["loggedUser"] = username;
+                        drorCommands.CheckAccess(dbName);
                     }
                     else
                     {

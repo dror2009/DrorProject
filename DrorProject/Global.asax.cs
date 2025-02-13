@@ -18,6 +18,7 @@ namespace DrorProject
         protected void Session_Start(object sender, EventArgs e)
         {
             Session["loggedUser"] = null;
+            Session["userAccess"] = "";
             Application.Lock();
             Application["connections"] = (int)Application["connections"]+1;
             Application.UnLock();

@@ -73,6 +73,7 @@
     </Content>
     <Content Include="css\style.css" />
     <Content Include="Global.asax" />
+    <Content Include="pages\admin\adminUpd.aspx" />
     <Content Include="pages\admin\printDB.aspx" />
     <Content Include="pages\chat.aspx" />
     <Content Include="pages\djia.aspx" />
@@ -113,6 +114,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\drorCommands.cs" />
     <Compile Include="App_Start\HelperA.cs" />
     <Compile Include="ashx\chatHandler.ashx.cs">
       <DependentUpon>chatHandler.ashx</DependentUpon>
@@ -133,6 +135,13 @@
     </Compile>
     <Compile Include="Master1.Master.designer.cs">
       <DependentUpon>Master1.Master</DependentUpon>
+    </Compile>
+    <Compile Include="pages\admin\adminUpd.aspx.cs">
+      <DependentUpon>adminUpd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\admin\adminUpd.aspx.designer.cs">
+      <DependentUpon>adminUpd.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\admin\printDB.aspx.cs">
       <DependentUpon>printDB.aspx</DependentUpon>

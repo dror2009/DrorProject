@@ -83,7 +83,6 @@ public class HelperA
         printStr += "</table>";
         return printStr;
     }
-
 }
 
 
