@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="form-page-content">
-        <h1>Update data:</h1>
+        <h1>Update data for <%=Session["AdminUpdateName"] %>:</h1>
         <form id="update" runat="server" method="post">
             <label for="uName">Enter username:</label>
             <input name="uName" type="text" id="uName" placeholder="Enter username here." value="<%=oldUName %>" />
@@ -16,16 +16,16 @@
             <input name="lName" type="text" id="lastName" placeholder="Enter last name here." value="<%=oldLName %>" />
             <br />
             <label for="mage">Enter age:</label>
-            <input name="mage" type="number" id="mage" placeholder="Enter age here." value="<%=oldAge %>" step="1" min="0" max="120" />
+            <input name="mage" type="number" id="mage" placeholder="Enter age here." value="<%=oldAge %>" step="1" />
             <br />
             <label for="emmail">Enter email:</label>
             <input name="emmail" type="text" id="emmail" placeholder="Enter email here." value="<%=oldEmail %>" />
             <br />
             <label for="pwd">Enter password:</label>
-            <input name="pwd" type="text" id="pwd" placeholder="Enter password here." value="<%=oldPwd %>" />
+            <input name="pwd" type="password" id="pwd" placeholder="Enter password here." value="<%=oldPwd %>" />
             <br />
             <label for="pwd1">Re-enter your password:</label>
-            <input name="pwd1" type="text" id="pwd1" placeholder="Re-enter your password here." value="<%=oldPwd %>" />
+            <input name="pwd1" type="password" id="pwd1" placeholder="Re-enter your password here." value="<%=oldPwd %>" />
             <br />
             <% if (oldGender)
                 {%>
@@ -56,7 +56,7 @@
             <input type="text" id="phoneNum" name="phoneNum" placeholder="Enter phone number here." value="<%=oldPhoneNum %>" />
             <br />
             <label for="yearBorn">Year born:</label>
-            <input type="text" id="yearBorn" name="yearBorn" placeholder="Enter your year of birth here." value="<%=oldYear %>" disabled="disabled" />
+            <input type="text" id="yearBorn" name="yearBorn" placeholder="Enter your year of birth here." value="<%=oldYear %>" />
             <br />
             <label for="city">City:</label>
             <select id="citty" name="citty">

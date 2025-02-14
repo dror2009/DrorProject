@@ -111,6 +111,7 @@
     <Content Include="scripts\list\taRealEstate.js" />
     <Content Include="scripts\masterMenu.js" />
     <Content Include="scripts\userTracker.js" />
+    <Content Include="scripts\validateForms.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

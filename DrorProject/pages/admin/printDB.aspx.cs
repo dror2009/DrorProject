@@ -15,6 +15,7 @@ namespace DrorProject.pages.admin
         private string dbName = "DB.mdf";
         private string access;
         public string UsersHtml = "";
+        public int connectedUsers;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["loggedUser"] != null)
@@ -24,6 +25,7 @@ namespace DrorProject.pages.admin
                 {
                     string sql = "SELECT Id, UNAME, FNAME, LNAME, EMAIL, GENDER, AGE, PREFIX, PNUM, CITY, HOBBY, YEARBORN, USERPERMISSION FROM Users;"; // Fetch all user data
                     UsersHtml = drorCommands.GetUsersTable(dbName, sql);
+                    connectedUsers = (int)Application["connections"];
                 }
                 else
                 {
@@ -71,6 +73,8 @@ namespace DrorProject.pages.admin
             string singleUserId = userIds[0]; // Take only the first one
 
             Session["AdminUpdate"] = singleUserId; // Store only one user ID in session
+            DataTable dt = HelperA.ExecuteDataTable(dbName,$"SELECT UNAME FROM Users WHERE Id = {singleUserId}");
+            Session["AdminUpdateName"] = dt.Rows[0]["UNAME"].ToString();
             Response.Redirect("~/pages/admin/adminUpd.aspx", false);
             HttpContext.Current.ApplicationInstance.CompleteRequest();
         }

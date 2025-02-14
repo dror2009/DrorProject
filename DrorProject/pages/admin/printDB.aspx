@@ -94,6 +94,7 @@
         <center>
 
             <h2>Admin Panel - Manage Users</h2>
+            <h3>Connected Users: <%=connectedUsers %></h3>
             <button type="button" id="deleteBtn" onclick="performAction('delete')">🗑 Delete Selected</button>
             <button type="button" id="updateBtn" onclick="performAction('update')">✏️ Update Selected</button>
             <button type="button" id="toggleBtn" onclick="performAction('togglePermissions')">🔄 Toggle Admin Permission</button>

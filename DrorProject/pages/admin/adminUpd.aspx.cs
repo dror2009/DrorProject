@@ -28,7 +28,7 @@ namespace DrorProject.pages.admin
         public string oldPwd;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["AdminUpdate"] != null && (string)Session["userAccess"]=="admin")
+            if (Session["AdminUpdate"] != null && Session["AdminUpdateName"] != null && (string)Session["userAccess"]=="admin")
             {
                 string user = Session["AdminUpdate"].ToString();
                 string sql = $"SELECT * FROM Users WHERE Id = '{user}'";
@@ -85,6 +85,7 @@ namespace DrorProject.pages.admin
                             int num = HelperA.DoQuery(dbName, update);
                             message = "Successfully updated!";
                             Session["AdminUpdate"] = null;
+                            Session["AdminUpdateName"] = null;
                             Response.Redirect("~/pages/admin/printDB.aspx");
                         }
                         else
