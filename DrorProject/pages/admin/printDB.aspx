@@ -91,10 +91,12 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="page-content">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <a href="/pages/admin/adminMenu.aspx" style="font-size: 1rem; color: #333;">Go Back</a>
+            <h1 style="margin: 0 auto;">Admin Panel - Manage Users</h1>
+        </div>
         <center>
-
-            <h2>Admin Panel - Manage Users</h2>
-            <h3>Connected Users: <%=connectedUsers %></h3>
+            <h3>Connected Users: <%=Application["connections"] %></h3>
             <button type="button" id="deleteBtn" onclick="performAction('delete')">🗑 Delete Selected</button>
             <button type="button" id="updateBtn" onclick="performAction('update')">✏️ Update Selected</button>
             <button type="button" id="toggleBtn" onclick="performAction('togglePermissions')">🔄 Toggle Admin Permission</button>

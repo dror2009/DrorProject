@@ -71,6 +71,12 @@ public class HelperA
     {
         DataTable dt = ExecuteDataTable(fileName, sql);
         string printStr = "<table border=1>";
+        printStr += "<tr>";
+        foreach (DataColumn col in dt.Columns)
+        {
+            printStr += $"<th>{col.ColumnName}</th>";
+        }
+        printStr += "</tr>";
         foreach (DataRow row in dt.Rows)
         {
             printStr += "<tr>";

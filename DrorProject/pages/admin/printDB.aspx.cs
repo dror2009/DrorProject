@@ -15,7 +15,6 @@ namespace DrorProject.pages.admin
         private string dbName = "DB.mdf";
         private string access;
         public string UsersHtml = "";
-        public int connectedUsers;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["loggedUser"] != null)
@@ -25,7 +24,6 @@ namespace DrorProject.pages.admin
                 {
                     string sql = "SELECT Id, UNAME, FNAME, LNAME, EMAIL, GENDER, AGE, PREFIX, PNUM, CITY, HOBBY, YEARBORN, USERPERMISSION FROM Users;"; // Fetch all user data
                     UsersHtml = drorCommands.GetUsersTable(dbName, sql);
-                    connectedUsers = (int)Application["connections"];
                 }
                 else
                 {

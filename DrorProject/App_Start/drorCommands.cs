@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Xml.Linq;
@@ -53,6 +54,26 @@ namespace DrorProject.App_Start
 
             html += "</table>";
             return html;
+        }
+        public static bool IsValidSQLCommand(string fileName, string sqlCommand)
+        {
+            try
+            {
+                using (SqlConnection conn = HelperA.ConnectToDb(fileName)) 
+                {
+                    conn.Open(); 
+
+                    using (SqlCommand cmd = new SqlCommand(sqlCommand, conn)) 
+                    {
+                        cmd.ExecuteScalar();
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
