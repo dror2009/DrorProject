@@ -23,22 +23,31 @@ namespace DrorProject.pages.admin
             }
             if (IsPostBack)
             {
-                string sql = Request.Form["query"];
-                if (drorCommands.IsValidSQLCommand(dbName, sql))
+                drorCommands.CheckAccess(dbName);
+                access = (string)Session["userAccess"];
+                if (access.Equals("admin"))
                 {
-                    if (sql.StartsWith("select", StringComparison.OrdinalIgnoreCase))
+                    string sql = Request.Form["query"];
+                    if (drorCommands.IsValidSQLCommand(dbName, sql))
                     {
-                        message2 = HelperA.printDataTable(dbName, sql);
+                        if (sql.StartsWith("select", StringComparison.OrdinalIgnoreCase))
+                        {
+                            message2 = HelperA.printDataTable(dbName, sql);
+                        }
+                        else
+                        {
+                            HelperA.DoQuery(dbName, sql);
+                            message2 = "Success.";
+                        }
                     }
                     else
                     {
-                        HelperA.DoQuery(dbName, sql);
-                        message2 = "Successed.";
+                        message = "Invalid SQL command.";
                     }
                 }
                 else
                 {
-                    message = "Invalid SQL command.";
+                    Response.Redirect("~/pages/main.aspx");
                 }
             }
         }
