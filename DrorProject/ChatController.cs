@@ -25,6 +25,8 @@ namespace DrorProject
                 return "❌ Message cannot be empty.";
             }
 
+            message = message.Replace("'", "''");
+
             string sql = $"INSERT INTO ChatMessages (Username, Message) VALUES (N'{username}', N'{message}')";
 
             int rowsAffected = HelperA.DoQuery(dbName, sql);

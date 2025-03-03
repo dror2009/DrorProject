@@ -33,6 +33,7 @@ namespace DrorProject.pages
                         string city = Request.Form["city"];
                         string hobby = Request.Form["hobby"];
                         int age = int.Parse(Request.Form["age"]);
+                        password = password.Replace("'", "''"); // SQL Injection prevention
                         insert = $"INSERT INTO Users (UNAME, FNAME, LNAME, PWD, EMAIL, GENDER, AGE, PREFIX, PNUM, CITY, HOBBY, YEARBORN) VALUES";
                         insert += $" (N'{username}',";
                         insert += $" N'{fName}',";
