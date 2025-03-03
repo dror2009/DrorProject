@@ -3,26 +3,27 @@
 
     // =================== Configuration =================== //
 
-    const MIN_USERNAME_LENGTH = 3;
-    const MAX_USERNAME_LENGTH = 15;
-    const MIN_FNAME_LENGTH = 2;
-    const MAX_FNAME_LENGTH = 15;
-    const MIN_LNAME_LENGTH = 2;
-    const MAX_LNAME_LENGTH = 15;
-    const MIN_PASSWORD_LENGTH = 4;
-    const MAX_PASSWORD_LENGTH = 15;
-    const MIN_EMAIL_LENGTH = 6;
-    const MAX_EMAIL_LENGTH = 30;
-    const MIN_AGE = 0;
-    const MAX_AGE = 120;
-    const MIN_YEAR_BORN = 1900;
-    const MAX_YEAR_BORN = new Date().getFullYear();
+    const MIN_USERNAME_LENGTH = 3; //username min length
+    const MAX_USERNAME_LENGTH = 15; //username max length
+    const MIN_FNAME_LENGTH = 2; //first name min length
+    const MAX_FNAME_LENGTH = 15; //first name max length
+    const MIN_LNAME_LENGTH = 2; //last name min length
+    const MAX_LNAME_LENGTH = 15; //last name max length
+    const MIN_PASSWORD_LENGTH = 4; //password min length
+    const MAX_PASSWORD_LENGTH = 15; // password max length
+    const MIN_EMAIL_LENGTH = 6; //email min length
+    const MAX_EMAIL_LENGTH = 30; //email max length
+    const MIN_AGE = 13; //age min value
+    const MAX_AGE = 120; //age max value
+    const MIN_YEAR_BORN = 1900; //year born min value
+    const MAX_YEAR_BORN = new Date().getFullYear(); //year born max value
+    const MAX_PHONE_LENGTH = 10; //phone number max length
 
     // Patterns for validation
     const NAME_PATTERN = /^[a-zA-Z\u0590-\u05FF\s]+$/; // English & Hebrew letters only
     const USERNAME_PATTERN = /^[a-zA-Z0-9\u0590-\u05FF\s]+$/; // Hebrew, English, numbers
     const EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const PHONE_PATTERN = /^(05[0-9]|0[2-9])-?\d{7}$/; // Israeli phone format
+    const PHONE_PATTERN = /^(05[0-9]|0[2-9])\d{7}$/; // Israeli phone format
 
     // Error messages
     const ERROR_MESSAGES = {
@@ -71,6 +72,23 @@
         }
     }
 
+    // Strict phone number validation (Numbers only, max 10 digits, no special characters)
+    function enforcePhoneNumberRestrictions(selector, maxLength) {
+        const input = document.querySelector(selector);
+        if (input) {
+            input.addEventListener("input", function () {
+                let cleanedValue = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
+
+                // Enforce max length
+                if (cleanedValue.length > maxLength) {
+                    cleanedValue = cleanedValue.slice(0, maxLength);
+                }
+
+                input.value = cleanedValue; // Update input field with cleaned value
+            });
+        }
+    }
+
     // Apply length restrictions to relevant fields (ONLY IF THEY EXIST)
     enforceLengthRestrictions("[name='uName']", MIN_USERNAME_LENGTH, MAX_USERNAME_LENGTH);
     enforceLengthRestrictions("[name='fName']", MIN_FNAME_LENGTH, MAX_FNAME_LENGTH);
@@ -79,6 +97,9 @@
     enforceLengthRestrictions("[name='pwd1']", MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
     enforceLengthRestrictions("[name='email']", MIN_EMAIL_LENGTH, MAX_EMAIL_LENGTH);
     enforceLengthRestrictions("[name='emmail']", MIN_EMAIL_LENGTH, MAX_EMAIL_LENGTH);
+
+    // Apply phone number restrictions (Numbers only, max 10 characters)
+    enforcePhoneNumberRestrictions("[name='phoneNum']", MAX_PHONE_LENGTH);
 
     // Real-time validation
     document.querySelectorAll("input, select").forEach(input => {
