@@ -17,7 +17,7 @@ namespace DrorProject.pages
             if (IsPostBack)
             {
                 string username = Request.Form["uName"];
-                if (!HelperA.IsExist(dbName, $"select * from Users where UNAME like N'{username}'"))
+                if (!HelperA.IsExist(dbName, $"SELECT * FROM Users WHERE UNAME COLLATE Hebrew_100_CI_AS = N'{username}'"))
                 {
                     string password = Request.Form["pwd"];
                     string cpwd = Request.Form["pwd1"];
