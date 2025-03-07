@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DrorProject.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace DrorProject.pages.admin
         public string oldPwd;
         protected void Page_Load(object sender, EventArgs e)
         {
+            drorCommands.CheckAccess(dbName);
             if (Session["AdminUpdate"] != null && Session["AdminUpdateName"] != null && (string)Session["userAccess"]=="admin")
             {
                 string user = Session["AdminUpdate"].ToString();

@@ -17,6 +17,7 @@ namespace DrorProject.pages.admin
         public string UsersHtml = "";
         protected void Page_Load(object sender, EventArgs e)
         {
+            drorCommands.CheckAccess(dbName);
             if (Session["loggedUser"] != null)
             {
                 access = (string)Session["userAccess"];
