@@ -19,6 +19,11 @@ namespace DrorProject.pages.admin
             {
                 Response.Redirect("~/pages/main.aspx");
             }
+            if (IsPostBack)
+            {
+                string sql = "TRUNCATE TABLE ChatMessages";
+                HelperA.DoQuery(dbName, sql);
+            }
         }
     }
 }
