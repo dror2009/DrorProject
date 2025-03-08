@@ -100,6 +100,18 @@
         </div>
 
         <script>
+            function isAtBottom() {
+                var messagesListId = "<%= messagesList.ClientID %>";
+                var messageList = $("#" + messagesListId);
+                var scrollPosition = messageList.scrollTop();
+                var containerHeight = messageList.innerHeight();
+                var fullHeight = messageList[0].scrollHeight;
+
+                console.log(`Scroll Position: ${scrollPosition}, Container Height: ${containerHeight}, Full Height: ${fullHeight}`);
+
+                return scrollPosition + containerHeight >= fullHeight - 5; // Small offset for precision
+            }
+
             function loadMessages() {
                 var messagesListId = "<%= messagesList.ClientID %>";
                 var messageList = $("#" + messagesListId);
@@ -115,6 +127,9 @@
                         messageList.append(`<li><strong>${msg.Username}:</strong> ${msg.Message} <span>(${msg.Timestamp})</span></li>`);
                     });
                 });
+                if (isAtBottom()) {
+                    setTimeout(goDown, 100)
+                }
             }
             function goDown() {
                 var messagesListId = "<%= messagesList.ClientID %>";
@@ -135,7 +150,7 @@
                 } else {
                     $("#statusMessage").text("❌ Message cannot be empty.");
                 }
-                goDown();
+                setTimeout(goDown, 100);
             }
 
             // Send message when pressing "Enter"
@@ -153,8 +168,8 @@
                     messageList.scrollTop(messageList[0].scrollHeight);
                 }, 500); // Ensures it scrolls after messages load
             });
-            messageList.scrollTop(messageList[0].scrollHeight);
-            setInterval(loadMessages, 2000);
+            setInterval(loadMessages, 1000);
+
         </script>
 
     </div>
