@@ -1,4 +1,5 @@
 ﻿using DrorProject.App_Start;
+using DrorProject.pages.update;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,38 +19,14 @@ namespace DrorProject.pages
             if (IsPostBack)
             {
                 string username = Request.Form["uName"];
-                if (!HelperA.IsExist(dbName, $"SELECT * FROM Users WHERE UNAME COLLATE Hebrew_100_CI_AS = N'{username}'"))
+                if (!usernameExists(username))
                 {
                     string password = Request.Form["pwd"];
                     string cpwd = Request.Form["pwd1"];
-                    if (password == cpwd)
+                    if (passwordMatch(password, cpwd))
                     {
-                        string fName = Request.Form["fName"];
-                        string lName = Request.Form["lName"];
-                        string email = Request.Form["email"];
-                        bool gender = bool.Parse(Request.Form["gender"]);
-                        string prefix = Request.Form["phonePrefix"];
-                        string phoneNum = Request.Form["phoneNum"];
-                        string year = Request.Form["yearBorn"];
-                        string city = Request.Form["city"];
-                        string hobby = Request.Form["hobby"];
-                        int age = int.Parse(Request.Form["age"]);
-                        username = username.Replace("'", "''"); // SQL Injection prevention
-                        password = password.Replace("'", "''"); // SQL Injection prevention
-                        insert = $"INSERT INTO Users (UNAME, FNAME, LNAME, PWD, EMAIL, GENDER, AGE, PREFIX, PNUM, CITY, HOBBY, YEARBORN) VALUES";
-                        insert += $" (N'{username}',";
-                        insert += $" N'{fName}',";
-                        insert += $" N'{lName}',";
-                        insert += $" N'{password}',";
-                        insert += $" N'{email}',";
-                        insert += $" N'{gender}',";
-                        insert += $" {age},";
-                        insert += $" N'{prefix}',";
-                        insert += $" N'{phoneNum}',";
-                        insert += $" N'{city}',";
-                        insert += $" N'{hobby}',";
-                        insert += $" {year})";
-                        int num = HelperA.DoQuery(dbName, insert);
+                        insert = getSqlInsertCommand();
+                        HelperA.DoQuery(dbName, insert);
                         message = "Successfully signed up!";
                     }
                     else
@@ -63,6 +40,42 @@ namespace DrorProject.pages
                 }
 
             }
+        }
+        private string symbolErrorFix(string text)
+        {
+            return text.Replace("'", "''");
+        }
+        private bool usernameExists(string username)
+        {
+            return HelperA.IsExist(dbName, $"SELECT * FROM Users WHERE UNAME COLLATE Hebrew_100_CI_AS = N'{username}'");
+        }
+        private bool passwordMatch(string string1, string string2)
+        {
+            return string1.Equals(string2);
+        }
+        private string getSqlInsertCommand()
+        {
+            string insert = "";
+            string fName = Request.Form["fName"];
+            string lName = Request.Form["lName"];
+            string email = Request.Form["email"];
+            bool gender = bool.Parse(Request.Form["gender"]);
+            string prefix = Request.Form["phonePrefix"];
+            string phoneNum = Request.Form["phoneNum"];
+            string year = Request.Form["yearBorn"];
+            string city = Request.Form["city"];
+            string hobby = Request.Form["hobby"];
+            int age = int.Parse(Request.Form["age"]);
+            string username = Request.Form["uName"];
+            string password = Request.Form["pwd"];
+
+            username = symbolErrorFix(username);
+            password = symbolErrorFix(password);
+
+            insert = $"INSERT INTO Users (UNAME, FNAME, LNAME, PWD, EMAIL, GENDER, AGE, PREFIX, PNUM, CITY, HOBBY, YEARBORN) VALUES ";
+            insert += $"(N'{username}', N'{fName}', N'{lName}', N'{password}', N'{email}', '{gender}', {age}, N'{prefix}', N'{phoneNum}', N'{city}', N'{hobby}', {year})";
+
+            return insert;
         }
     }
 }

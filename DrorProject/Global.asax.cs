@@ -13,6 +13,7 @@ namespace DrorProject
         protected void Application_Start(object sender, EventArgs e)
         {
             Application["connections"] = 0;
+            Application["loggedUsers"] = "";
         }
 
         protected void Session_Start(object sender, EventArgs e)

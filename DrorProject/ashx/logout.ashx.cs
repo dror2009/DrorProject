@@ -16,11 +16,15 @@ namespace DrorProject
         {
             //context.Response.ContentType = "text/plain";
             //context.Response.Write("Hello World");
+            string loggedUser = context.Session["loggedUser"].ToString();
             if (context.Session["loggedUser"] != null)
             {
+                context.Application["loggedUsers"] = context.Application["loggedUsers"].ToString().Replace($"<li>{loggedUser}</li>", "");
                 context.Session["loggedUser"] = null;
                 context.Session.Clear();
                 context.Session.Abandon();
+                context.Session.RemoveAll();
+                context.Response.Redirect("/pages/main.aspx");
             }
         }
 

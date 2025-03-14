@@ -19,28 +19,68 @@ namespace DrorProject.pages
             if (IsPostBack)
             {
                 string username = Request.Form["uName"];
-                if (HelperA.IsExist(dbName, $"select * from Users where UNAME like N'{username}'"))
+                if (usernameExists(username))
                 {
                     string password = Request.Form["pwd"];
-                    sql = $"select UNAME, PWD from Users where UNAME = N'{username}' and PWD = N'{password}'";
-                    if (HelperA.IsExist(dbName, sql))
+                    if (passwordMatchUsername(username, password))
                     {
-                        message = "Welcome, " + username;
-                        Session["loggedUser"] = username;
-                        drorCommands.CheckAccess(dbName);
+                        loginSuccess(username);
                     }
                     else
                     {
-                        message = "Invalid password.";
-                        Session["loggedUser"] = null;
+                        loginFailed("pwd");
                     }
                 }
                 else
                 {
-                    message = "Username doesn't exist.";
-                    Session["loggedUser"] = null;
+                    loginFailed("username");
                 }
             }
+        }
+        private bool usernameExists(string username)
+        {
+            username = symbolErrorFix(username);
+            return HelperA.IsExist(dbName, $"select * from Users where UNAME like N'{username}'");
+        }
+        private bool passwordMatchUsername(string username, string password)
+        {
+            username = symbolErrorFix(username);
+            password = symbolErrorFix(password);
+
+            string sql = $"select UNAME, PWD from Users where UNAME = N'{username}' and PWD = N'{password}'";
+
+            return HelperA.IsExist(dbName, sql);
+        }
+        private void loginSuccess(string username)
+        {
+            if (username.Length < 3)
+            {
+                message = "Invalid username.";
+                return;
+            }
+            message = "Welcome, " + username;
+            Session["loggedUser"] = username;
+            drorCommands.CheckAccess(dbName);
+        }
+        private void loginFailed(string failCase)
+        {
+            switch (failCase)
+            {
+                case "pwd":
+                    message = "Invalid password.";
+                    break;
+                case "username":
+                    message = "Username doesn't exist.";
+                    break;
+                default:
+                    message = "Unknown login error.";
+                    break;
+            }
+            Session["loggedUser"] = null;
+        }
+        private string symbolErrorFix(string text)
+        {
+            return text.Replace("'", "''");
         }
     }
 }

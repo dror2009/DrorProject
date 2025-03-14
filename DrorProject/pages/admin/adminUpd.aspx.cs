@@ -1,4 +1,5 @@
 ﻿using DrorProject.App_Start;
+using DrorProject.pages.update;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -29,60 +30,20 @@ namespace DrorProject.pages.admin
         public string oldPwd;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["AdminUpdate"] != null && Session["AdminUpdateName"] != null && drorCommands.isAdmin(dbName))
+            if (adminValidation())
             {
                 string user = Session["AdminUpdate"].ToString();
-                string sql = $"SELECT * FROM Users WHERE Id = '{user}'";
-                DataTable userData = HelperA.ExecuteDataTable(dbName, sql);
-
-                if (userData.Rows.Count > 0)
-                {
-                    DataRow row = userData.Rows[0];
-                    oldUName = row["UNAME"].ToString();
-                    oldFName = row["FNAME"].ToString();
-                    oldLName = row["LNAME"].ToString();
-                    oldEmail = row["EMAIL"].ToString();
-                    oldGender = (bool)row["GENDER"];
-                    oldAge = row["AGE"].ToString();
-                    oldPrefix = row["PREFIX"].ToString();
-                    oldPhoneNum = row["PNUM"].ToString();
-                    oldCity = row["CITY"].ToString();
-                    oldHobby = row["HOBBY"].ToString();
-                    oldYear = row["YEARBORN"].ToString();
-                    oldPwd = row["PWD"].ToString();
-                }
+                getOldValues();
                 if (IsPostBack)
                 {
                     string username = Request.Form["uName"];
-                    if (!HelperA.IsExist(dbName, $"select * from Users where UNAME = N'{username}'") || oldUName == username)
+                    if (usernameValidation(user, username))
                     {
                         string password = Request.Form["pwd"];
                         string cpwd = Request.Form["pwd1"];
-                        if (password == cpwd)
+                        if (passwordsMatch(password, cpwd))
                         {
-                            string fName = Request.Form["fName"];
-                            string lName = Request.Form["lName"];
-                            string email = Request.Form["emmail"];
-                            bool gender = bool.Parse(Request.Form["gender"]);
-                            string prefix = Request.Form["phonePrefix"];
-                            string phoneNum = Request.Form["phoneNum"];
-                            string city = Request.Form["citty"];
-                            string hobby = Request.Form["hobby"];
-                            string age = Request.Form["mage"];
-
-                            string update = $"UPDATE Users SET";
-                            update += $" UNAME = N'{username}',";
-                            update += $" FNAME = N'{fName}',";
-                            update += $" LNAME = N'{lName}',";
-                            update += $" PWD = N'{password}',";
-                            update += $" EMAIL = N'{email}',";
-                            update += $" GENDER = N'{gender}',";
-                            update += $" AGE = {age},";
-                            update += $" PREFIX = N'{prefix}',";
-                            update += $" PNUM = N'{phoneNum}',";
-                            update += $" CITY = N'{city}',";
-                            update += $" HOBBY = N'{hobby}'";
-                            update += $" WHERE Id = '{user}';";
+                            string update = getUpdateSqlCommand();
                             if (drorCommands.isAdmin(dbName))
                             {
                                 HelperA.DoQuery(dbName, update);
@@ -91,6 +52,7 @@ namespace DrorProject.pages.admin
                             else
                             {
                                 message = "You are not an admin!";
+                                Response.Redirect("~/pages/main.aspx");
                             }
                             Session["AdminUpdate"] = null;
                             Session["AdminUpdateName"] = null;
@@ -107,6 +69,79 @@ namespace DrorProject.pages.admin
             {
                 Response.Redirect("~/pages/main.aspx");
             }
+        }
+        private void getOldValues()
+        {
+            string user = Session["AdminUpdate"].ToString();
+            string sql = $"SELECT * FROM Users WHERE Id = '{user}'";
+            DataTable userData = HelperA.ExecuteDataTable(dbName, sql);
+
+            if (userData.Rows.Count > 0)
+            {
+                DataRow row = userData.Rows[0];
+                oldUName = row["UNAME"].ToString();
+                oldFName = row["FNAME"].ToString();
+                oldLName = row["LNAME"].ToString();
+                oldEmail = row["EMAIL"].ToString();
+                oldGender = (bool)row["GENDER"];
+                oldAge = row["AGE"].ToString();
+                oldPrefix = row["PREFIX"].ToString();
+                oldPhoneNum = row["PNUM"].ToString();
+                oldCity = row["CITY"].ToString();
+                oldHobby = row["HOBBY"].ToString();
+                oldYear = row["YEARBORN"].ToString();
+                oldPwd = row["PWD"].ToString();
+            }
+        }
+        private bool usernameValidation(string sessionUsername, string formUsername)
+        {
+            return !HelperA.IsExist(dbName, $"select * from Users where UNAME = N'{formUsername}'") || sessionUsername == formUsername;
+        }
+        private string symbolErrorFix(string text)
+        {
+            return text.Replace("'", "''");
+        }
+        private bool passwordsMatch(string password, string cpassword)
+        {
+            return password == cpassword;
+        }
+        private string getUpdateSqlCommand()
+        {
+            string user = Session["AdminUpdate"].ToString();
+
+            string password = Request.Form["pwd"];
+            string username = Request.Form["uName"];
+            string fName = Request.Form["fName"];
+            string lName = Request.Form["lName"];
+            string email = Request.Form["emmail"];
+            bool gender = bool.Parse(Request.Form["gender"]);
+            string prefix = Request.Form["phonePrefix"];
+            string phoneNum = Request.Form["phoneNum"];
+            string city = Request.Form["citty"];
+            string hobby = Request.Form["hobby"];
+            string age = Request.Form["mage"];
+
+            username = symbolErrorFix(username);
+            password = symbolErrorFix(password);
+
+            string update = $"UPDATE Users SET";
+            update += $" UNAME = N'{username}',";
+            update += $" FNAME = N'{fName}',";
+            update += $" LNAME = N'{lName}',";
+            update += $" PWD = N'{password}',";
+            update += $" EMAIL = N'{email}',";
+            update += $" GENDER = N'{gender}',";
+            update += $" AGE = {age},";
+            update += $" PREFIX = N'{prefix}',";
+            update += $" PNUM = N'{phoneNum}',";
+            update += $" CITY = N'{city}',";
+            update += $" HOBBY = N'{hobby}'";
+            update += $" WHERE Id = '{user}';";
+            return update;
+        }
+        private bool adminValidation()
+        {
+            return Session["AdminUpdate"] != null && Session["AdminUpdateName"] != null && drorCommands.isAdmin(dbName);
         }
     }
 }
