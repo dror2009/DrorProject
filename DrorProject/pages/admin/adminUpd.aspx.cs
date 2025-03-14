@@ -13,7 +13,7 @@ namespace DrorProject.pages.admin
     {
         public string data = "";
         public string message = "";
-        private string dbName = "DB.mdf";
+        private string dbName = drorCommands.dbName;
 
         public string oldUName;
         public string oldFName;
@@ -29,8 +29,7 @@ namespace DrorProject.pages.admin
         public string oldPwd;
         protected void Page_Load(object sender, EventArgs e)
         {
-            drorCommands.CheckAccess(dbName);
-            if (Session["AdminUpdate"] != null && Session["AdminUpdateName"] != null && (string)Session["userAccess"]=="admin")
+            if (Session["AdminUpdate"] != null && Session["AdminUpdateName"] != null && drorCommands.isAdmin(dbName))
             {
                 string user = Session["AdminUpdate"].ToString();
                 string sql = $"SELECT * FROM Users WHERE Id = '{user}'";
@@ -84,8 +83,15 @@ namespace DrorProject.pages.admin
                             update += $" CITY = N'{city}',";
                             update += $" HOBBY = N'{hobby}'";
                             update += $" WHERE Id = '{user}';";
-                            int num = HelperA.DoQuery(dbName, update);
-                            message = "Successfully updated!";
+                            if (drorCommands.isAdmin(dbName))
+                            {
+                                HelperA.DoQuery(dbName, update);
+                                message = "Successfully updated!";
+                            }
+                            else
+                            {
+                                message = "You are not an admin!";
+                            }
                             Session["AdminUpdate"] = null;
                             Session["AdminUpdateName"] = null;
                             Response.Redirect("~/pages/admin/printDB.aspx");

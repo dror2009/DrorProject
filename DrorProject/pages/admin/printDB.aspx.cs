@@ -12,16 +12,13 @@ namespace DrorProject.pages.admin
 {
     public partial class printDB : System.Web.UI.Page
     {
-        private string dbName = "DB.mdf";
-        private string access;
+        private string dbName = drorCommands.dbName;
         public string UsersHtml = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            drorCommands.CheckAccess(dbName);
-            if (Session["loggedUser"] != null)
+            if (drorCommands.isAdmin(dbName))
             {
-                access = (string)Session["userAccess"];
-                if (access.Equals("admin"))
+                if (drorCommands.isAdmin(dbName))
                 {
                     string sql = "SELECT Id, UNAME, FNAME, LNAME, EMAIL, GENDER, AGE, PREFIX, PNUM, CITY, HOBBY, YEARBORN, USERPERMISSION FROM Users;"; // Fetch all user data
                     UsersHtml = drorCommands.GetUsersTable(dbName, sql);

@@ -13,7 +13,7 @@ namespace DrorProject.pages
         public string user = "";
         public string message = "";
         public string sql = "";
-        private string dbName = "DB.mdf";
+        private string dbName = drorCommands.dbName;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack)

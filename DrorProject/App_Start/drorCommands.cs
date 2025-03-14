@@ -10,6 +10,7 @@ namespace DrorProject.App_Start
 {
     public class drorCommands
     {
+        public static string dbName = "DB.mdf";
         public static void CheckAccess(string dbName)
         {
             if (HttpContext.Current.Session["loggedUser"] == null)
@@ -24,6 +25,12 @@ namespace DrorProject.App_Start
                 string access = userData.Rows[0]["USERPERMISSION"].ToString();
                 HttpContext.Current.Session["userAccess"] = access;
             }
+        }
+        public static bool isAdmin(string dbName)
+        {
+            CheckAccess(dbName);
+            string access = HttpContext.Current.Session["userAccess"].ToString();
+            return access == "admin";
         }
         public static string GetUsersTable(string fileName, string sql)
         {
@@ -59,11 +66,11 @@ namespace DrorProject.App_Start
         {
             try
             {
-                using (SqlConnection conn = HelperA.ConnectToDb(fileName)) 
+                using (SqlConnection conn = HelperA.ConnectToDb(fileName))
                 {
-                    conn.Open(); 
+                    conn.Open();
 
-                    using (SqlCommand cmd = new SqlCommand(sqlCommand, conn)) 
+                    using (SqlCommand cmd = new SqlCommand(sqlCommand, conn))
                     {
                         cmd.ExecuteScalar();
                     }

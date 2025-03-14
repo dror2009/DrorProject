@@ -10,22 +10,18 @@ namespace DrorProject.pages.admin
 {
     public partial class query : System.Web.UI.Page
     {
-        private string dbName = "DB.mdf";
+        private string dbName = drorCommands.dbName;
         public string message = "";
         public string message2 = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            drorCommands.CheckAccess(dbName);
-            string access = (string)Session["userAccess"];
-            if (!access.Equals("admin"))
+            if (!drorCommands.isAdmin(dbName))
             {
                 Response.Redirect("~/pages/main.aspx");
             }
             if (IsPostBack)
             {
-                drorCommands.CheckAccess(dbName);
-                access = (string)Session["userAccess"];
-                if (access.Equals("admin"))
+                if (drorCommands.isAdmin(dbName))
                 {
                     string sql = Request.Form["query"];
                     if (drorCommands.IsValidSQLCommand(dbName, sql))

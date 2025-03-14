@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DrorProject.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,7 @@ namespace DrorProject.pages
     public partial class signup : System.Web.UI.Page
     {
         public string message = "no user";
-        private string dbName = "DB.mdf";
+        private string dbName = drorCommands.dbName;
         public string insert = "";
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -33,6 +34,7 @@ namespace DrorProject.pages
                         string city = Request.Form["city"];
                         string hobby = Request.Form["hobby"];
                         int age = int.Parse(Request.Form["age"]);
+                        username = username.Replace("'", "''"); // SQL Injection prevention
                         password = password.Replace("'", "''"); // SQL Injection prevention
                         insert = $"INSERT INTO Users (UNAME, FNAME, LNAME, PWD, EMAIL, GENDER, AGE, PREFIX, PNUM, CITY, HOBBY, YEARBORN) VALUES";
                         insert += $" (N'{username}',";

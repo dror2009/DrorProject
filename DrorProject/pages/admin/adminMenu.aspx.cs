@@ -10,12 +10,10 @@ namespace DrorProject.pages.admin
 {
     public partial class adminMenu : System.Web.UI.Page
     {
-        private string dbName = "DB.mdf";
+        private string dbName = drorCommands.dbName;
         protected void Page_Load(object sender, EventArgs e)
         {
-            drorCommands.CheckAccess(dbName);
-            string access = (string)Session["userAccess"];
-            if (!access.Equals("admin"))
+            if (!drorCommands.isAdmin(dbName))
             {
                 Response.Redirect("~/pages/main.aspx");
             }

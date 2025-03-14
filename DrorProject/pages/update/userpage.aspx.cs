@@ -13,7 +13,7 @@ namespace DrorProject.pages.update
     public partial class userpage : System.Web.UI.Page
     {
         string access;
-        private string dbName = "DB.mdf";
+        private string dbName = drorCommands.dbName;
         protected void Page_Load(object sender, EventArgs e)
         {
             drorCommands.CheckAccess(dbName);

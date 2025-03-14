@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DrorProject.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace DrorProject
 {
     public class ChatController
     {
-        private static string dbName = "DB.mdf"; // Database name
+        private static string dbName = drorCommands.dbName;
 
         public static string SendMessage(string message)
         {
@@ -25,6 +26,7 @@ namespace DrorProject
                 return "❌ Message cannot be empty.";
             }
 
+            username = username.Replace("'", "''");
             message = message.Replace("'", "''");
 
             string sql = $"INSERT INTO ChatMessages (Username, Message) VALUES (N'{username}', N'{message}')";

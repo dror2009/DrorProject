@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DrorProject.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace DrorProject.pages.update
     {
         public string data = "";
         public string message = "";
-        private string dbName = "DB.mdf";
+        private string dbName = drorCommands.dbName;
 
         public string oldUName;
         public string oldFName;
