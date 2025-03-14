@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Web;
 using System.Web.Services;
 using System.Web.UI;
@@ -55,6 +56,64 @@ namespace DrorProject.pages.admin
                     }
                 }
             }
+            if (IsPostBack)
+            {
+                string filterCase = Request.Form["filterValue"];
+                string input;
+                switch (filterCase)
+                {
+                    case "Id":
+                    case "UNAME":
+                    case "FNAME":
+                    case "LNAME":
+                    case "EMAIL":
+                    case "USERPERMISSION":
+                    case "PNUM":
+                        input = Request.Form["textInput"];
+                        UsersHtml = drorCommands.GetUsersTable(dbName,
+                            $"SELECT Id, UNAME, FNAME, LNAME, EMAIL, GENDER, AGE, PREFIX, PNUM, CITY, HOBBY, YEARBORN, USERPERMISSION FROM Users WHERE {filterCase} = '{EscapeSql(input)}'");
+                        break;
+
+                    case "AGE":
+                    case "YEARBORN":
+                        if (!int.TryParse(Request.Form["numberInput"], out int numericInput)) // Validate integer input
+                        {
+                            UsersHtml = "Invalid number input.";
+                            return;
+                        }
+                        UsersHtml = drorCommands.GetUsersTable(dbName,
+                            $"SELECT Id, UNAME, FNAME, LNAME, EMAIL, GENDER, AGE, PREFIX, PNUM, CITY, HOBBY, YEARBORN, USERPERMISSION FROM Users WHERE {filterCase} = {numericInput}");
+                        break;
+
+                    case "PREFIX":
+                        input = Request.Form["prefix"];
+                        UsersHtml = drorCommands.GetUsersTable(dbName,
+                            $"SELECT Id, UNAME, FNAME, LNAME, EMAIL, GENDER, AGE, PREFIX, PNUM, CITY, HOBBY, YEARBORN, USERPERMISSION FROM Users WHERE {filterCase} = '{EscapeSql(input)}'");
+                        break;
+
+                    case "CITY":
+                        input = Request.Form["city"];
+                        UsersHtml = drorCommands.GetUsersTable(dbName,
+                            $"SELECT Id, UNAME, FNAME, LNAME, EMAIL, GENDER, AGE, PREFIX, PNUM, CITY, HOBBY, YEARBORN, USERPERMISSION FROM Users WHERE {filterCase} = '{EscapeSql(input)}'");
+                        break;
+
+                    case "HOBBY":
+                        input = Request.Form["hobby"];
+                        UsersHtml = drorCommands.GetUsersTable(dbName,
+                            $"SELECT Id, UNAME, FNAME, LNAME, EMAIL, GENDER, AGE, PREFIX, PNUM, CITY, HOBBY, YEARBORN, USERPERMISSION FROM Users WHERE {filterCase} = '{EscapeSql(input)}'");
+                        break;
+
+                    case "GENDER":
+                        input = Request.Form["gender"];
+                        UsersHtml = drorCommands.GetUsersTable(dbName,
+                            $"SELECT Id, UNAME, FNAME, LNAME, EMAIL, GENDER, AGE, PREFIX, PNUM, CITY, HOBBY, YEARBORN, USERPERMISSION FROM Users WHERE {filterCase} = '{EscapeSql(input)}'");
+                        break;
+
+                    default:
+                        UsersHtml = "Invalid filter case.";
+                        break;
+                }
+            }
         }
         private void DeleteUsers(string selectedIds)
         {
@@ -91,6 +150,10 @@ namespace DrorProject.pages.admin
         public static string GetUpdatedUsersHtml()
         {
             return GetUsersHtml();
+        }
+        private string EscapeSql(string input)
+        {
+            return input.Replace("'", "''");
         }
     }
 }
