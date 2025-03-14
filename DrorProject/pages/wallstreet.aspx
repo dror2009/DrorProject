@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="wallstreet.aspx.cs" Inherits="DrorProject.pages.wallstreet" %>
+﻿<%@ Page Title="Wallstreet" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="wallstreet.aspx.cs" Inherits="DrorProject.pages.wallstreet" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>

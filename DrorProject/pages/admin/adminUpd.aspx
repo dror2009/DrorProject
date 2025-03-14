@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="adminUpd.aspx.cs" Inherits="DrorProject.pages.admin.adminUpd" %>
+﻿<%@ Page Title="Admin Update Data" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="adminUpd.aspx.cs" Inherits="DrorProject.pages.admin.adminUpd" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>

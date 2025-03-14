@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="printDB.aspx.cs" Inherits="DrorProject.pages.admin.printDB" %>
+﻿<%@ Page Title="Database Control For Admins" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="printDB.aspx.cs" Inherits="DrorProject.pages.admin.printDB" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
@@ -85,6 +85,22 @@
             document.getElementById("selectedUsers").value = selectedIds;
             document.getElementById("adminForm").submit();
         }
+        function updateUsersTable() {
+            $.ajax({
+                type: "POST",
+                url: "printDB.aspx/GetUpdatedUsersHtml",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    document.getElementById("usersTableContainer").innerHTML = response.d;
+                },
+                error: function (error) {
+                    console.error("Error fetching updated users table:", error);
+                }
+            });
+        }
+
+        setInterval(updateUsersTable, 5000);
     </script>
 
 

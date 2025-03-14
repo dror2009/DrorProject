@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="query.aspx.cs" Inherits="DrorProject.pages.admin.query" %>
+﻿<%@ Page Title="Database Query for Admins" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="query.aspx.cs" Inherits="DrorProject.pages.admin.query" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>

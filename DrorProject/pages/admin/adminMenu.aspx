@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="adminMenu.aspx.cs" Inherits="DrorProject.pages.admin.adminMenu" %>
+﻿<%@ Page Title="Admin Menu" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="adminMenu.aspx.cs" Inherits="DrorProject.pages.admin.adminMenu" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>

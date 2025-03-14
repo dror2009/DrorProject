@@ -1,4 +1,4 @@
-﻿<%@ Page Title="main" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="main.aspx.cs" Inherits="DrorProject.pages.main" %>
+﻿<%@ Page Title="Home" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="main.aspx.cs" Inherits="DrorProject.pages.main" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>

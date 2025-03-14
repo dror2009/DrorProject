@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -20,8 +21,7 @@ namespace DrorProject.pages.admin
             {
                 if (drorCommands.isAdmin(dbName))
                 {
-                    string sql = "SELECT Id, UNAME, FNAME, LNAME, EMAIL, GENDER, AGE, PREFIX, PNUM, CITY, HOBBY, YEARBORN, USERPERMISSION FROM Users;"; // Fetch all user data
-                    UsersHtml = drorCommands.GetUsersTable(dbName, sql);
+                    UsersHtml = GetUsersHtml();
                 }
                 else
                 {
@@ -69,7 +69,7 @@ namespace DrorProject.pages.admin
             string singleUserId = userIds[0]; // Take only the first one
 
             Session["AdminUpdate"] = singleUserId; // Store only one user ID in session
-            DataTable dt = HelperA.ExecuteDataTable(dbName,$"SELECT UNAME FROM Users WHERE Id = {singleUserId}");
+            DataTable dt = HelperA.ExecuteDataTable(dbName, $"SELECT UNAME FROM Users WHERE Id = {singleUserId}");
             Session["AdminUpdateName"] = dt.Rows[0]["UNAME"].ToString();
             Response.Redirect("~/pages/admin/adminUpd.aspx", false);
             HttpContext.Current.ApplicationInstance.CompleteRequest();
@@ -80,6 +80,17 @@ namespace DrorProject.pages.admin
             string sql = $"UPDATE Users SET USERPERMISSION = CASE WHEN USERPERMISSION = 'admin' THEN '' ELSE 'admin' END WHERE Id IN ({selectedIds})";
             HelperA.DoQuery(dbName, sql);
             Response.Redirect(Request.RawUrl);
+        }
+        public static string GetUsersHtml()
+        {
+            string dbName = drorCommands.dbName;
+            string sql = "SELECT Id, UNAME, FNAME, LNAME, EMAIL, GENDER, AGE, PREFIX, PNUM, CITY, HOBBY, YEARBORN, USERPERMISSION FROM Users;";
+            return drorCommands.GetUsersTable(dbName, sql);
+        }
+        [WebMethod]
+        public static string GetUpdatedUsersHtml()
+        {
+            return GetUsersHtml();
         }
     }
 }
