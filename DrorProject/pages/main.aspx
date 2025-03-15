@@ -22,6 +22,10 @@
             <li><a href="/pages/ta35.aspx">TA-35</a></li>
             <li><a href="/pages/tabiomed.aspx">TA-Biomed</a></li>
             <li><a href="/pages/taRealEstate.aspx">TA-Real Estate</a></li>
+            <li><a href="/pages/ftse.aspx">FTSE 100</a></li>
+            <li><a href="/pages/dax.aspx">DAX</a></li>
+            <li><a href="/pages/cac40.aspx">CAC 40</a></li>
+            <li><a href="/pages/estx.aspx">Euro Stoxx 50</a></li>
         </ul>
     </div>
 </asp:Content>
