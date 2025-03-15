@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DrorProject.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,7 @@ namespace DrorProject.pages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            drorCommands.isLoggedIn();
         }
     }
 }

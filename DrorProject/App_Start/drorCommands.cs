@@ -82,5 +82,25 @@ namespace DrorProject.App_Start
                 return false;
             }
         }
+        public static void isLoggedIn()
+        {
+            if (HttpContext.Current.Session["loggedUser"] == null)
+            {
+                HttpContext.Current.Response.Redirect("/pages/accessMessages/notLoggedIn.aspx");
+            }
+            else return;
+        }
+        public static void adminAccess()
+        {
+            if (isAdmin(dbName))
+            {
+                return;
+            }
+            else
+            {
+                HttpContext.Current.Response.Redirect("/pages/accessMessages/noAccess.aspx", true);
+                HttpContext.Current.Response.End();
+            }
+        }
     }
 }

@@ -18,21 +18,9 @@ namespace DrorProject.pages.admin
         public string UsersHtml = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (drorCommands.isAdmin(dbName))
-            {
-                if (drorCommands.isAdmin(dbName))
-                {
-                    UsersHtml = GetUsersHtml();
-                }
-                else
-                {
-                    Response.Redirect("~/pages/main.aspx");
-                }
-            }
-            else
-            {
-                Response.Redirect("~/pages/main.aspx");
-            }
+
+            drorCommands.adminAccess();
+            UsersHtml = GetUsersHtml();
 
             // Handle form submissions
             if (Request.HttpMethod == "POST")

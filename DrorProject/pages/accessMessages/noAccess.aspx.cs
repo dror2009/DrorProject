@@ -1,18 +1,17 @@
-﻿using DrorProject.App_Start;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace DrorProject.pages
+namespace DrorProject.pages.accessMessages
 {
-    public partial class wallstreet : System.Web.UI.Page
+    public partial class noAccess : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
         }
     }
 }

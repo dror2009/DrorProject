@@ -30,6 +30,7 @@ namespace DrorProject.pages.admin
         public string oldPwd;
         protected void Page_Load(object sender, EventArgs e)
         {
+            drorCommands.adminAccess();
             if (adminValidation())
             {
                 string user = Session["AdminUpdate"].ToString();
@@ -44,15 +45,11 @@ namespace DrorProject.pages.admin
                         if (passwordsMatch(password, cpwd))
                         {
                             string update = getUpdateSqlCommand();
+                            drorCommands.adminAccess();
                             if (drorCommands.isAdmin(dbName))
                             {
                                 HelperA.DoQuery(dbName, update);
                                 message = "Successfully updated!";
-                            }
-                            else
-                            {
-                                message = "You are not an admin!";
-                                Response.Redirect("~/pages/main.aspx");
                             }
                             Session["AdminUpdate"] = null;
                             Session["AdminUpdateName"] = null;
@@ -67,7 +64,7 @@ namespace DrorProject.pages.admin
             }
             else
             {
-                Response.Redirect("~/pages/main.aspx");
+                Response.Redirect("~/pages/accessMessages/noAccess.aspx");
             }
         }
         private void getOldValues()

@@ -73,6 +73,8 @@
     </Content>
     <Content Include="css\style.css" />
     <Content Include="Global.asax" />
+    <Content Include="pages\accessMessages\noAccess.aspx" />
+    <Content Include="pages\accessMessages\notLoggedIn.aspx" />
     <Content Include="pages\admin\adminMenu.aspx" />
     <Content Include="pages\admin\adminUpd.aspx" />
     <Content Include="pages\admin\printDB.aspx" />
@@ -150,6 +152,20 @@
     </Compile>
     <Compile Include="Master1.Master.designer.cs">
       <DependentUpon>Master1.Master</DependentUpon>
+    </Compile>
+    <Compile Include="pages\accessMessages\noAccess.aspx.cs">
+      <DependentUpon>noAccess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\accessMessages\noAccess.aspx.designer.cs">
+      <DependentUpon>noAccess.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\accessMessages\notLoggedIn.aspx.cs">
+      <DependentUpon>notLoggedIn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\accessMessages\notLoggedIn.aspx.designer.cs">
+      <DependentUpon>notLoggedIn.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\admin\adminMenu.aspx.cs">
       <DependentUpon>adminMenu.aspx</DependentUpon>

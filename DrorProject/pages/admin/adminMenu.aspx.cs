@@ -13,10 +13,7 @@ namespace DrorProject.pages.admin
         private string dbName = drorCommands.dbName;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!drorCommands.isAdmin(dbName))
-            {
-                Response.Redirect("~/pages/main.aspx");
-            }
+            drorCommands.adminAccess();
             if (IsPostBack)
             {
                 string sql = "TRUNCATE TABLE ChatMessages";

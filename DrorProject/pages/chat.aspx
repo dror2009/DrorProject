@@ -150,6 +150,7 @@
                     $("#statusMessage").text("❌ Message cannot be empty.");
                 }
                 setTimeout(goDown, 100);
+                loadMessages();
             }
 
             // Send message when pressing "Enter"
