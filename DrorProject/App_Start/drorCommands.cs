@@ -86,7 +86,8 @@ namespace DrorProject.App_Start
         {
             if (HttpContext.Current.Session["loggedUser"] == null)
             {
-                HttpContext.Current.Response.Redirect("/pages/accessMessages/notLoggedIn.aspx");
+                HttpContext.Current.Response.Redirect("/pages/accessMessages/notLoggedIn.aspx", true);
+                HttpContext.Current.Response.End();
             }
             else return;
         }
