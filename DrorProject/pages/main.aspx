@@ -8,8 +8,6 @@
         <p>
             Explore detailed insights about major stock indices, including the S&P 500, NASDAQ, Dow Jones Industrial Average, and Russell 2000. Click on the menu above to navigate to the respective pages.
             <br />
-            All stock indices were last updated on: 14/01/2025.
-            <br />
             Everything is showed in United States Dollars ($USD)
         </p>
         <h3>List of indices:</h3>
