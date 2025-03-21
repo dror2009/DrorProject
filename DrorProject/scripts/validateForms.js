@@ -16,7 +16,7 @@
     const MIN_AGE = 13; //age min value
     const MAX_AGE = 120; //age max value
     const MIN_YEAR_BORN = 1900; //year born min value
-    const MAX_YEAR_BORN = new Date().getFullYear(); //year born max value
+    const MAX_YEAR_BORN = new Date().getFullYear()-12; //year born max value
     const MAX_PHONE_LENGTH = 10; //phone number max length
 
     // Patterns for validation
