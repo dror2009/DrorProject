@@ -163,10 +163,7 @@
 
             $(document).ready(function () {
                 loadMessages();
-                setTimeout(() => {
-                    var messageList = $("#" + "<%= messagesList.ClientID %>");
-                    messageList.scrollTop(messageList[0].scrollHeight);
-                }, 500); // Ensures it scrolls after messages load
+                setTimeout(goDown, 500); // Ensures it scrolls after messages load
             });
             setInterval(loadMessages, 1000);
 

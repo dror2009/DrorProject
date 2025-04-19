@@ -61,7 +61,7 @@
     }
 
     // Restrict input length (blocks further input)
-    function enforceLengthRestrictions(selector, minLength, maxLength) {
+    function enforceLengthRestrictions(selector, maxLength) {
         const input = document.querySelector(selector);
         if (input) {
             input.addEventListener("input", function () {
@@ -90,13 +90,13 @@
     }
 
     // Apply length restrictions to relevant fields (ONLY IF THEY EXIST)
-    enforceLengthRestrictions("[name='uName']", MIN_USERNAME_LENGTH, MAX_USERNAME_LENGTH);
-    enforceLengthRestrictions("[name='fName']", MIN_FNAME_LENGTH, MAX_FNAME_LENGTH);
-    enforceLengthRestrictions("[name='lName']", MIN_LNAME_LENGTH, MAX_LNAME_LENGTH);
-    enforceLengthRestrictions("[name='pwd']", MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
-    enforceLengthRestrictions("[name='pwd1']", MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
-    enforceLengthRestrictions("[name='email']", MIN_EMAIL_LENGTH, MAX_EMAIL_LENGTH);
-    enforceLengthRestrictions("[name='emmail']", MIN_EMAIL_LENGTH, MAX_EMAIL_LENGTH);
+    enforceLengthRestrictions("[name='uName']", MAX_USERNAME_LENGTH);
+    enforceLengthRestrictions("[name='fName']", MAX_FNAME_LENGTH);
+    enforceLengthRestrictions("[name='lName']", MAX_LNAME_LENGTH);
+    enforceLengthRestrictions("[name='pwd']", MAX_PASSWORD_LENGTH);
+    enforceLengthRestrictions("[name='pwd1']", MAX_PASSWORD_LENGTH);
+    enforceLengthRestrictions("[name='email']", MAX_EMAIL_LENGTH);
+    enforceLengthRestrictions("[name='emmail']", MAX_EMAIL_LENGTH);
 
     // Apply phone number restrictions (Numbers only, max 10 characters)
     enforcePhoneNumberRestrictions("[name='phoneNum']", MAX_PHONE_LENGTH);
