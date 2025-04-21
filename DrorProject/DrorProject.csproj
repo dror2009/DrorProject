@@ -79,6 +79,7 @@
     <Content Include="pages\admin\adminUpd.aspx" />
     <Content Include="pages\admin\printDB.aspx" />
     <Content Include="pages\admin\query.aspx" />
+    <Content Include="pages\admin\simpleQuery.aspx" />
     <Content Include="pages\cac40.aspx" />
     <Content Include="pages\chat.aspx" />
     <Content Include="pages\dax.aspx" />
@@ -194,6 +195,13 @@
     </Compile>
     <Compile Include="pages\admin\query.aspx.designer.cs">
       <DependentUpon>query.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\admin\simpleQuery.aspx.cs">
+      <DependentUpon>simpleQuery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\admin\simpleQuery.aspx.designer.cs">
+      <DependentUpon>simpleQuery.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\cac40.aspx.cs">
       <DependentUpon>cac40.aspx</DependentUpon>

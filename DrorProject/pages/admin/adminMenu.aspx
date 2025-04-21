@@ -30,6 +30,7 @@
         </center>
         <h2><a href="printDB.aspx" class="link">Users Control</a></h2>
         <h2><a href="query.aspx" class="link">Query</a></h2>
+        <h2><a href="simpleQuery.aspx" class="link">Simple Query</a></h2>
         <form method="post" runat="server" name="clearChat" id="clearChatForm">
             <button type="button" id="firstClick">Clear Chat</button>
             <button type="submit" id="secondClick" style="display: none;">Are you sure?</button>

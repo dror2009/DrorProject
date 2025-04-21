@@ -12,7 +12,6 @@ namespace DrorProject.pages.admin
     {
         private string dbName = drorCommands.dbName;
         public string message = "";
-        public string message2 = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             drorCommands.adminAccess();
@@ -20,17 +19,22 @@ namespace DrorProject.pages.admin
             {
                 drorCommands.adminAccess();
                 string sql = Request.Form["query"];
-                if (drorCommands.IsValidSQLCommand(dbName, sql))
+                string DoSafeQueryMessage = drorCommands.DoSafeQuery(dbName, sql);
+                if (DoSafeQueryMessage == "Success")
                 {
                     if (isPrintCommand(sql))
                     {
-                        message2 = HelperA.printDataTable(dbName, sql);
+                        message = HelperA.printDataTable(dbName, sql);
                     }
                     else
                     {
                         HelperA.DoQuery(dbName, sql);
-                        message2 = "Success.";
+                        message = "Success.";
                     }
+                }
+                else
+                {
+                    message = DoSafeQueryMessage;
                 }
             }
         }

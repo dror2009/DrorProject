@@ -62,24 +62,16 @@ namespace DrorProject.App_Start
             html += "</table>";
             return html;
         }
-        public static bool IsValidSQLCommand(string fileName, string sqlCommand)
+        public static string DoSafeQuery(string fileName, string sqlCommand)
         {
             try
             {
-                using (SqlConnection conn = HelperA.ConnectToDb(fileName))
-                {
-                    conn.Open();
-
-                    using (SqlCommand cmd = new SqlCommand(sqlCommand, conn))
-                    {
-                        cmd.ExecuteScalar();
-                    }
-                }
-                return true;
+                HelperA.DoQuery(fileName, sqlCommand);
+                return "Success";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                return ex.ToString();
             }
         }
         public static void isLoggedIn()

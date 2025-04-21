@@ -35,12 +35,11 @@
         </div>
         <form name="query" runat="server" method="post">
             <label for="query">Enter command: </label>
-            <input type="text" name="query" id="query" placeholder="Enter database command here." />
-            <h3><%=message %></h3>
+            <input type="text" name="query" id="query" placeholder="Enter query command here." />
             <br />
             <button type="submit">Execute</button>
         </form>
         <br />
-        <%=message2 %>
+        <%=message %>
     </div>
 </asp:Content>
