@@ -153,6 +153,7 @@
             <input type="radio" id="female" name="gender" value="false" style="display: none;" />
             <label for="female" style="display: none;">Female</label>
             <button type="submit">Filter</button>
+            <button type="button" onclick="window.location.href=window.location.href;">Reset Filter</button>
         </form>
         <center>
             <h3>Connected Users: <%=Application["connections"] %></h3>
