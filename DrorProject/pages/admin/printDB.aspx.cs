@@ -34,8 +34,7 @@ namespace DrorProject.pages.admin
                     if (IsExists(selected, Session["id"].ToString()))
                     {
                         string s = Session["id"].ToString();
-                        drorCommands.Alert("You cannot select yourself.");
-                        Response.Redirect(Request.RawUrl);
+                        Alert("You cannot select yourself.");
                         return;
                     }
                     else
@@ -64,6 +63,7 @@ namespace DrorProject.pages.admin
         {
             string sql = $"DELETE FROM Users WHERE Id IN ({selectedIds})";
             HelperA.DoQuery(dbName, sql);
+            Alert("Successfully deleted selected users.");
             Response.Redirect(Request.RawUrl);
         }
 
@@ -83,6 +83,7 @@ namespace DrorProject.pages.admin
         {
             string sql = $"UPDATE Users SET USERPERMISSION = CASE WHEN USERPERMISSION = 'admin' THEN '' ELSE 'admin' END WHERE Id IN ({selectedIds})";
             HelperA.DoQuery(dbName, sql);
+            Alert("Successfully toggled permission for selected users.");
             Response.Redirect(Request.RawUrl);
         }
         public static string GetUsersHtml()
@@ -168,6 +169,11 @@ namespace DrorProject.pages.admin
                 }
             }
             return false;
+        }
+        public void Alert(string message)
+        {
+            string script = $"alert('{message}');";
+            ClientScript.RegisterStartupScript(this.GetType(), "alertScript", script, true);
         }
     }
 }

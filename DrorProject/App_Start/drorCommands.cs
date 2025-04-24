@@ -98,16 +98,5 @@ namespace DrorProject.App_Start
                 HttpContext.Current.Response.End();
             }
         }
-        public static void Alert(string message)
-        {
-            message = message.Replace("'", "\\'");
-            string script = $"<script>alert('{message}');</script>";
-            var page = HttpContext.Current.Handler as Page;
-
-            if (page != null)
-            {
-                page.ClientScript.RegisterStartupScript(page.GetType(), "alert", script);
-            }
-        }
     }
 }
