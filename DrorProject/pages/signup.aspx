@@ -84,6 +84,7 @@
         <label for="coding">Coding</label>
         <br />
         <br />
+        <div style="display: none;" id="shouldClear" runat="server" clientidmode="Static"></div>
         <button type="submit">Sign up</button>
         <br />
         <h3><%=message %></h3>

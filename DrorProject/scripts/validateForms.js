@@ -16,7 +16,7 @@
     const MIN_AGE = 13; //age min value
     const MAX_AGE = 120; //age max value
     const MIN_YEAR_BORN = 1900; //year born min value
-    const MAX_YEAR_BORN = new Date().getFullYear()-12; //year born max value
+    const MAX_YEAR_BORN = new Date().getFullYear() - 12; //year born max value
     const MAX_PHONE_LENGTH = 10; //phone number max length
 
     // Patterns for validation
@@ -211,6 +211,170 @@
             });
         }
     });
+    if ($("#login").length) {
+        $("#login").validate({
+            // (a) Use your custom rules via the plugin's rules/messages
+            rules: {
+                uName: {
+                    required: true,
+                    minlength: MIN_USERNAME_LENGTH,
+                    pattern: USERNAME_PATTERN
+                },
+                pwd: {
+                    required: true,
+                    minlength: MIN_PASSWORD_LENGTH
+                }
+            },
+            messages: {
+                uName: {
+                    required: "Username is required",
+                    minlength: `At least ${MIN_USERNAME_LENGTH} chars`
+                },
+                pwd: {
+                    required: "Password is required",
+                    minlength: `At least ${MIN_PASSWORD_LENGTH} chars`
+                }
+            },
 
+            // 2) submitHandler only runs when the form is valid
+            submitHandler: function (form) {
+                // form is the DOM element; you can still use jQuery
+                const formData = $(form).serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: "login.aspx",
+                    data: formData,
+                    success: function (data) {
+                        const html = $(data);
+                        const msg = html.find("#resultArea").html();
+                        $("#resultArea").html(msg);
+
+                        if (html.find("#shouldClear").html() === "true") {
+                            form.reset();
+                            $("#welcome-message").html("Welcome, " + $("input[name=uName]").val());
+                        } else {
+                            $("#welcome-message").html("Welcome Guest");
+                        }
+                    },
+                    error: function (xhr, status, err) {
+                        $("#resultArea").text("Error: " + err);
+                    }
+                });
+                return false; // prevent normal submit
+            }
+        });
+    }
+    if ($("#signup").length) {
+        // 1) Validate the form when it is submitted
+        $("#signup").validate({
+            rules: {
+                uName: {
+                    required: true,
+                    minlength: 5,
+                    pattern: /^[a-zA-Z0-9]+$/  // Allow alphanumeric usernames only
+                },
+                fName: {
+                    required: true,
+                    minlength: 2
+                },
+                lName: {
+                    required: true,
+                    minlength: 2
+                },
+                age: {
+                    required: true,
+                    min: 18,
+                    max: 120
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                pwd: {
+                    required: true,
+                    minlength: 8
+                },
+                pwd1: {
+                    required: true,
+                    minlength: 8,
+                    equalTo: "#password"  // Ensure passwords match
+                },
+                phoneNum: {
+                    required: true,
+                    minlength: 9
+                },
+                city: {
+                    required: true
+                }
+            },
+            messages: {
+                uName: {
+                    required: "Please enter a username.",
+                    minlength: "Your username must be at least 5 characters long."
+                },
+                fName: {
+                    required: "Please enter your first name.",
+                    minlength: "Your first name must be at least 2 characters long."
+                },
+                lName: {
+                    required: "Please enter your last name.",
+                    minlength: "Your last name must be at least 2 characters long."
+                },
+                age: {
+                    required: "Please enter your age.",
+                    min: "You must be at least 18 years old.",
+                    max: "Please enter a valid age."
+                },
+                email: {
+                    required: "Please enter a valid email address.",
+                    email: "Please enter a valid email address."
+                },
+                pwd: {
+                    required: "Please provide a password.",
+                    minlength: "Your password must be at least 8 characters long."
+                },
+                pwd1: {
+                    required: "Please re-enter your password.",
+                    minlength: "Your password must be at least 8 characters long.",
+                    equalTo: "Passwords do not match."
+                },
+                phoneNum: {
+                    required: "Please enter your phone number.",
+                    minlength: "Phone number must be at least 9 digits."
+                },
+                city: {
+                    required: "Please select a city."
+                }
+            },
+            submitHandler: function (form) {
+                // Prevent form submission (handled by AJAX)
+                const formData = $(form).serialize();  // Serialize form data for submission
+
+                $.ajax({
+                    type: "POST",
+                    url: "signup.aspx",  // Your server-side signup handler
+                    data: formData,
+                    success: function (response) {
+                        const html = $(response);
+                        const msg = html.find("#resultArea").html();  // Assuming you have an area for this
+                        $("#resultArea").html(msg);  // Update the result area with server response
+
+                        if (html.find("#shouldClear").html() === "true") {
+                            form.reset();  // Clear the form if necessary
+                            $("#welcome-message").html("Welcome, " + $("input[name=uName]").val());
+                        } else {
+                            $("#welcome-message").html("Welcome Guest");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle errors
+                        $("#resultArea").html("Error: " + error);
+                    }
+                });
+                return false;  // Prevent normal form submission
+            }
+        });
+    }
     console.log("Validation script successfully applied.");
 });

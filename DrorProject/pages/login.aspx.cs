@@ -16,7 +16,7 @@ namespace DrorProject.pages
         private string dbName = drorCommands.dbName;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack)
+            if (Request.HttpMethod == "POST")
             {
                 string username = Request.Form["uName"];
                 if (usernameExists(username))
@@ -25,15 +25,18 @@ namespace DrorProject.pages
                     if (passwordMatchUsername(username, password))
                     {
                         loginSuccess(username);
+                        shouldClear.InnerHtml = "true";
                     }
                     else
                     {
                         loginFailed("pwd");
+                        shouldClear.InnerHtml = "false"; 
                     }
                 }
                 else
                 {
                     loginFailed("username");
+                    shouldClear.InnerHtml = "false";
                 }
             }
         }

@@ -19,12 +19,12 @@ namespace DrorProject
             string loggedUser = context.Session["loggedUser"].ToString();
             if (context.Session["loggedUser"] != null)
             {
-                context.Application["loggedUsers"] = context.Application["loggedUsers"].ToString().Replace($"<li>{loggedUser}</li>", "");
                 context.Session["loggedUser"] = null;
+                context.Session.RemoveAll();
                 context.Session.Clear();
                 context.Session.Abandon();
-                context.Session.RemoveAll();
                 context.Response.Redirect("/pages/main.aspx");
+                context.Response.End();
             }
         }
 

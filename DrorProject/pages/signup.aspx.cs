@@ -16,7 +16,7 @@ namespace DrorProject.pages
         public string insert = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack)
+            if (Request.HttpMethod == "POST")
             {
                 string username = Request.Form["uName"];
                 if (!usernameExists(username))
@@ -28,15 +28,19 @@ namespace DrorProject.pages
                         insert = getSqlInsertCommand();
                         HelperA.DoQuery(dbName, insert);
                         message = "Successfully signed up!";
+                        Session["loggedUser"] = username;
+                        shouldClear.InnerHtml = "true";
                     }
                     else
                     {
                         message = "Passwords do not match.";
+                        shouldClear.InnerHtml = "false";
                     }
                 }
                 else
                 {
                     message = "Username already exists.";
+                    shouldClear.InnerHtml = "false";
                 }
 
             }

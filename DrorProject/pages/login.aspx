@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="form-page-content">
         <h1>Log in</h1>
-        <form name="login" runat="server" method="post">
+        <form name="login" runat="server" method="post" id="login">
             <label for="username">Enter username:</label>
             &nbsp;
             <input name="uName" type="text" id="username" placeholder="Enter username here." />
@@ -17,7 +17,8 @@
             <button type="submit">Log in</button>
             <br />
             <br />
-            <h3><%=message %></h3>
+            <h3 id="resultArea"><%=message %></h3>
+            <div style="display: none;" id="shouldClear" runat="server" clientidmode="Static"></div>
         </form>
     </div>
 </asp:Content>

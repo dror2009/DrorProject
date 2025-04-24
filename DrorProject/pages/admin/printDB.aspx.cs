@@ -30,6 +30,12 @@ namespace DrorProject.pages.admin
 
                 if (!string.IsNullOrEmpty(selectedIds))
                 {
+                    if (selectedIds.Contains(Session["id"].ToString()))
+                    {
+                        drorCommands.Alert("You cannot select yourself.");
+                        Response.Redirect(Request.RawUrl);
+                        return;
+                    }
                     switch (actionType)
                     {
                         case "delete":

@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Services.Description;
+using System.Web.UI;
 using System.Xml.Linq;
 
 namespace DrorProject.App_Start
@@ -17,13 +19,14 @@ namespace DrorProject.App_Start
                 return;
 
             string user = HttpContext.Current.Session["loggedUser"].ToString();
-            string sql = $"SELECT USERPERMISSION FROM Users WHERE UNAME = N'{user}'";
+            string sql = $"SELECT Id, USERPERMISSION FROM Users WHERE UNAME = N'{user}'";
             DataTable userData = HelperA.ExecuteDataTable(dbName, sql);
 
             if (userData.Rows.Count > 0)
             {
                 string access = userData.Rows[0]["USERPERMISSION"].ToString();
                 HttpContext.Current.Session["userAccess"] = access;
+                HttpContext.Current.Session["id"] = userData.Rows[0]["id"];
             }
         }
         public static bool isAdmin(string dbName)
@@ -93,6 +96,17 @@ namespace DrorProject.App_Start
             {
                 HttpContext.Current.Response.Redirect("/pages/accessMessages/noAccess.aspx", true);
                 HttpContext.Current.Response.End();
+            }
+        }
+        public static void Alert(string message)
+        {
+            message = message.Replace("'", "\\'");
+            string script = $"<script>alert('{message}');</script>";
+            var page = HttpContext.Current.Handler as Page;
+
+            if (page != null)
+            {
+                page.ClientScript.RegisterStartupScript(page.GetType(), "alert", script);
             }
         }
     }
