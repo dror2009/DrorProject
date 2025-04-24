@@ -30,23 +30,28 @@ namespace DrorProject.pages.admin
 
                 if (!string.IsNullOrEmpty(selectedIds))
                 {
-                    if (selectedIds.Contains(Session["id"].ToString()))
+                    string[] selected = selectedIds.Split(',');
+                    if (IsExists(selected, Session["id"].ToString()))
                     {
+                        string s = Session["id"].ToString();
                         drorCommands.Alert("You cannot select yourself.");
                         Response.Redirect(Request.RawUrl);
                         return;
                     }
-                    switch (actionType)
+                    else
                     {
-                        case "delete":
-                            DeleteUsers(selectedIds);
-                            break;
-                        case "update":
-                            UpdateUser(selectedIds);
-                            break;
-                        case "togglePermissions":
-                            TogglePermissions(selectedIds);
-                            break;
+                        switch (actionType)
+                        {
+                            case "delete":
+                                DeleteUsers(selectedIds);
+                                break;
+                            case "update":
+                                UpdateUser(selectedIds);
+                                break;
+                            case "togglePermissions":
+                                TogglePermissions(selectedIds);
+                                break;
+                        }
                     }
                 }
             }
@@ -152,6 +157,17 @@ namespace DrorProject.pages.admin
                     UsersHtml = "Invalid filter case.";
                     break;
             }
+        }
+        public bool IsExists(string[] a, string n)
+        {
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i] == n)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
