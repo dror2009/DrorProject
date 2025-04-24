@@ -37,9 +37,10 @@
             <label for="command">Select command</label>
             <select name="command">
                 <option value="select">select</option>
-                <option value="delete">delete</option>
                 <option value="update">update</option>
+                <option value="delete">delete</option>
             </select>
+
             <label for="field">Choose a field:</label>
             <select name="field" id="field">
                 <option value="Id">Id</option>
@@ -55,10 +56,13 @@
                 <option value="HOBBY">HOBBY</option>
                 <option value="YEARBORN">YEARBORN</option>
             </select>
-            <label for="inp">where selected field equals (for update: set selected field to, for select where field is like %value%)</label>
+
+            <label for="inp">Enter value (for UPDATE: set selected field to this value, for SELECT: find where field is like %value%)</label>
             <input type="text" name="inp" />
-            <label for="inp2">where selected field euqals(UPDATE COMMAND ONLY)</label>
+
+            <label for="inp2">Enter condition value (UPDATE command only: WHERE selected field equals this value)</label>
             <input type="text" name="inp2" />
+
             <button type="submit">Execute</button>
             <div id="resultArea"><%=message %></div>
         </form>
