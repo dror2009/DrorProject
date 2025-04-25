@@ -40,6 +40,34 @@
             <button type="submit">Execute</button>
         </form>
         <br />
-        <%=message %>
+        <div id="resultArea"><%=message %></div>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#simpleQuery').submit(function (e) {
+                e.preventDefault(); // Prevent the default form submission, stop submitting the form and move on to submitting via AJAX without refreshing the page.
+
+                // Gather form data
+                const formData = {
+                    query: $('input[name=query]').val(),
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'simpleQuery.aspx',
+                    data: formData,  // Sends the form data, Request.Form will not work without that when using AJAX.
+                    success: function (data) {
+                        // What happens on success
+                        const html = $(data); // Takes the server-side response (in this case message's new value in #resultArea).
+                        const message = html.find('#resultArea').html(); // Takes only the div with the id #resultArea from the server's response and copies the response.
+                        $('#resultArea').html(message); // Puts the response in the client-side.
+                    },
+                    error: function (xhr, status, error) {
+                        // What happens on error
+                        document.getElementById('resultArea').innerHTML = 'Error: ' + error; // Writes the error at the result area/message in case of submitting error.
+                    }
+                });
+            });
+        });
+    </script>
 </asp:Content>

@@ -64,6 +64,8 @@
             <input type="text" name="inp2" />
 
             <button type="submit">Execute</button>
+            <br />
+            <br />
             <div id="resultArea"><%=message %></div>
         </form>
     </div>

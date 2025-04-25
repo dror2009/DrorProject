@@ -31,7 +31,19 @@ namespace DrorProject.pages.admin
                 {
                     if (cmd == "select")
                     {
-                        sql = $"select Id, UNAME, FNAME, LNAME, EMAIL, GENDER, AGE, PREFIX, PNUM, CITY, HOBBY, YEARBORN, USERPERMISSION from Users where {field} like '%{inp}%'";
+                        string sqlStart = "select Id, UNAME, FNAME, LNAME, EMAIL, GENDER, AGE, PREFIX, PNUM, CITY, HOBBY, YEARBORN, USERPERMISSION from Users";
+                        if (field == "YEARBORN" || field == "Id" || field == "GENDER" || field == "PREFIX")
+                        {
+                            sql = $"{sqlStart} where {field} like '{inp}'";
+                        }
+                        else if (field == "EMAIL" || field == "HOBBY")
+                        {
+                            sql = $"{sqlStart} where {field} like '%{inp}%";
+                        }
+                        else
+                        {
+                            sql = $"{sqlStart} where {field} like '{inp}%'";
+                        }
                         string safeQueryMsg = drorCommands.DoSafeQuery(dbName, sql);
                         if (safeQueryMsg == "Success")
                         {

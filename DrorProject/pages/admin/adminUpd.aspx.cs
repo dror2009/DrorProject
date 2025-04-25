@@ -32,7 +32,7 @@ namespace DrorProject.pages.admin
             drorCommands.adminAccess();
             if (adminValidation())
             {
-                string user = Session["AdminUpdate"].ToString();
+                string user = Session["AdminUpdateName"].ToString();
                 getOldValues();
                 if (IsPostBack)
                 {
@@ -97,7 +97,7 @@ namespace DrorProject.pages.admin
         }
         private bool usernameValidation(string sessionUsername, string formUsername)
         {
-            return !HelperA.IsExist(dbName, $"select * from Users where UNAME = N'{formUsername}'") || sessionUsername == formUsername;
+            return (!HelperA.IsExist(dbName, $"select * from Users where UNAME = N'{formUsername}'")) || sessionUsername.Equals(formUsername);
         }
         private string symbolErrorFix(string text)
         {
