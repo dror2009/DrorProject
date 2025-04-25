@@ -11,7 +11,7 @@ namespace DrorProject.pages
 {
     public partial class signup : System.Web.UI.Page
     {
-        public string message = "no user";
+        public string message = "";
         private string dbName = drorCommands.dbName;
         public string insert = "";
         protected void Page_Load(object sender, EventArgs e)

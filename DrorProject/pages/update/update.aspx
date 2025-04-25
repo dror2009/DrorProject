@@ -3,9 +3,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="form-page-content">
+    <div class="form-page-content" id="updateForm">
         <h1>Update data:</h1>
-        <form id="update" runat="server" method="post">
+        <form id="update" name="update" runat="server" method="post">
             <label for="uName">Enter username:</label>
             <input name="uName" type="text" id="uName" placeholder="Enter username here." value="<%=oldUName %>" />
             <br />
@@ -15,11 +15,11 @@
             <label for="lastName">Enter last name:</label>
             <input name="lName" type="text" id="lastName" placeholder="Enter last name here." value="<%=oldLName %>" />
             <br />
-            <label for="mage">Enter age:</label>
-            <input name="mage" type="number" id="mage" placeholder="Enter age here." value="<%=oldAge %>" step="1" />
+            <label for="age">Enter age:</label>
+            <input name="age" type="number" id="age" placeholder="Enter age here." value="<%=oldAge %>" step="1" />
             <br />
-            <label for="emmail">Enter email:</label>
-            <input name="emmail" type="text" id="emmail" placeholder="Enter email here." value="<%=oldEmail %>" />
+            <label for="email">Enter email:</label>
+            <input name="email" type="text" id="email" placeholder="Enter email here." value="<%=oldEmail %>" />
             <br />
             <label for="pwd">Enter password:</label>
             <input name="pwd" type="password" id="pwd" placeholder="Enter password here." value="<%=oldPwd %>" />
@@ -59,7 +59,7 @@
             <input type="text" id="yearBorn" name="yearBorn" placeholder="Enter your year of birth here." value="<%=oldYear %>" disabled="disabled" />
             <br />
             <label for="city">City:</label>
-            <select id="citty" name="citty">
+            <select id="city" name="city">
                 <% 
                     var cities = new[] { "Tel-Mond", "Kfar Saba", "Tel-Aviv", "Haifa", "Natania", "Jerusalem", "Eilat" };
                     foreach (var city in cities)
@@ -110,8 +110,16 @@
             <label for="coding">Coding</label>
             <br />
             <br />
-            <button type="submit">Update and go back to main</button>
+            <div style="display: none;" id="shouldClear" runat="server" clientidmode="Static"></div>
+            <button type="submit">Update data</button>
+            <h3 id="resultArea"><%=message %></h3>
         </form>
-
+    </div>
+    <div class="form-page-content" id="updateSuccess" style="display: none;">
+        <center>
+            <h3 style="font-size: 1.5rem;">Successfully updated data.</h3>
+            <h3><a href="../main.aspx" style="color: inherit;">Main page</a></h3>
+            <h3><a href="<%=Request.RawUrl %>" style="color: inherit;">Update</a></h3>
+        </center>
     </div>
 </asp:Content>

@@ -24,6 +24,7 @@
     const USERNAME_PATTERN = /^[a-zA-Z0-9\u0590-\u05FF\s]+$/; // Hebrew, English, numbers
     const EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const PHONE_PATTERN = /^(05[0-9]|0[2-9])\d{7}$/; // Israeli phone format
+    const NUMERIC_PATTERN = /^\d+$/;  // Only digits (for numeric fields)
 
     // Error messages
     const ERROR_MESSAGES = {
@@ -36,181 +37,13 @@
         yearBorn: `Year must be between ${MIN_YEAR_BORN} and ${MAX_YEAR_BORN}.`,
         passwordMatch: "Passwords do not match.",
         selectOption: "Please select an option.",
-        checkbox: "Please select at least one hobby."
     };
+    // JQuery form.validate pattern
+    $.validator.addMethod("pattern", function (value, element, pattern) {
+        if (this.optional(element)) return true;
+        return pattern.test(value);
+    }, "Invalid format.");
 
-    // =================== Helper Functions =================== //
-
-    function showError(input, message) {
-        let errorElement = input.nextElementSibling;
-        if (!errorElement || !errorElement.classList.contains("error-message")) {
-            errorElement = document.createElement("span");
-            errorElement.classList.add("error-message");
-            input.parentNode.insertBefore(errorElement, input.nextSibling);
-        }
-        errorElement.textContent = message;
-        errorElement.style.color = "red";
-        errorElement.style.display = "block";
-    }
-
-    function clearError(input) {
-        let errorElement = input.nextElementSibling;
-        if (errorElement && errorElement.classList.contains("error-message")) {
-            errorElement.remove();
-        }
-    }
-
-    // Restrict input length (blocks further input)
-    function enforceLengthRestrictions(selector, maxLength) {
-        const input = document.querySelector(selector);
-        if (input) {
-            input.addEventListener("input", function () {
-                if (input.value.length > maxLength) {
-                    input.value = input.value.slice(0, maxLength);
-                }
-            });
-        }
-    }
-
-    // Strict phone number validation (Numbers only, max 10 digits, no special characters)
-    function enforcePhoneNumberRestrictions(selector, maxLength) {
-        const input = document.querySelector(selector);
-        if (input) {
-            input.addEventListener("input", function () {
-                let cleanedValue = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
-
-                // Enforce max length
-                if (cleanedValue.length > maxLength) {
-                    cleanedValue = cleanedValue.slice(0, maxLength);
-                }
-
-                input.value = cleanedValue; // Update input field with cleaned value
-            });
-        }
-    }
-
-    // Apply length restrictions to relevant fields (ONLY IF THEY EXIST)
-    enforceLengthRestrictions("[name='uName']", MAX_USERNAME_LENGTH);
-    enforceLengthRestrictions("[name='fName']", MAX_FNAME_LENGTH);
-    enforceLengthRestrictions("[name='lName']", MAX_LNAME_LENGTH);
-    enforceLengthRestrictions("[name='pwd']", MAX_PASSWORD_LENGTH);
-    enforceLengthRestrictions("[name='pwd1']", MAX_PASSWORD_LENGTH);
-    enforceLengthRestrictions("[name='email']", MAX_EMAIL_LENGTH);
-    enforceLengthRestrictions("[name='emmail']", MAX_EMAIL_LENGTH);
-
-    // Apply phone number restrictions (Numbers only, max 10 characters)
-    enforcePhoneNumberRestrictions("[name='phoneNum']", MAX_PHONE_LENGTH);
-
-    // Real-time validation
-    document.querySelectorAll("input, select").forEach(input => {
-        if (input) {
-            input.addEventListener("input", function () {
-                validateField(input);
-            });
-        }
-    });
-
-    function validateField(input) {
-        let isValid = true;
-        let errorMessage = "";
-
-        if (["fName", "lName"].includes(input.name)) {
-            if (input.value.length < MIN_FNAME_LENGTH) {
-                isValid = false;
-                errorMessage = `Must be at least ${MIN_FNAME_LENGTH} characters.`;
-            } else if (!NAME_PATTERN.test(input.value)) {
-                isValid = false;
-                errorMessage = ERROR_MESSAGES.name;
-            }
-        }
-
-        if (input.name === "uName") {
-            if (input.value.length < MIN_USERNAME_LENGTH) {
-                isValid = false;
-                errorMessage = `Must be at least ${MIN_USERNAME_LENGTH} characters.`;
-            } else if (!USERNAME_PATTERN.test(input.value)) {
-                isValid = false;
-                errorMessage = ERROR_MESSAGES.username;
-            }
-        }
-
-        if (["pwd", "pwd1"].includes(input.name)) {
-            if (input.value.length < MIN_PASSWORD_LENGTH) {
-                isValid = false;
-                errorMessage = ERROR_MESSAGES.passwordLength;
-            }
-        }
-
-        if (["age", "mage"].includes(input.name)) {
-            const ageValue = parseInt(input.value, 10);
-            if (isNaN(ageValue) || ageValue < MIN_AGE || ageValue > MAX_AGE) {
-                isValid = false;
-                errorMessage = ERROR_MESSAGES.age;
-            }
-        }
-
-        if (["email", "emmail"].includes(input.name)) {
-            if (!EMAIL_PATTERN.test(input.value)) {
-                isValid = false;
-                errorMessage = ERROR_MESSAGES.email;
-            }
-        }
-
-        if (input.name === "yearBorn") {
-            const yearValue = parseInt(input.value, 10);
-            if (isNaN(yearValue) || yearValue < MIN_YEAR_BORN || yearValue > MAX_YEAR_BORN) {
-                isValid = false;
-                errorMessage = ERROR_MESSAGES.yearBorn;
-            }
-        }
-
-        if (input.name === "phoneNum") {
-            if (!PHONE_PATTERN.test(input.value)) {
-                isValid = false;
-                errorMessage = ERROR_MESSAGES.phone;
-            }
-        }
-
-        if (input.name === "pwd1") {
-            const passwordInput = document.querySelector("[name='pwd']");
-            if (passwordInput && passwordInput.value !== input.value) {
-                isValid = false;
-                errorMessage = ERROR_MESSAGES.passwordMatch;
-            }
-        }
-
-        if (["city", "citty", "phonePrefix"].includes(input.name)) {
-            if (input.value.trim() === "") {
-                isValid = false;
-                errorMessage = ERROR_MESSAGES.selectOption;
-            }
-        }
-
-        if (!isValid) {
-            showError(input, errorMessage);
-        } else {
-            clearError(input);
-        }
-
-        return isValid;
-    }
-
-    document.querySelectorAll("form").forEach(form => {
-        if (form) {
-            form.addEventListener("submit", function (event) {
-                let isValid = true;
-                form.querySelectorAll("input, select").forEach(input => {
-                    if (!validateField(input)) {
-                        isValid = false;
-                    }
-                });
-
-                if (!isValid) {
-                    event.preventDefault();
-                }
-            });
-        }
-    });
     if ($("#login").length) {
         $("#login").validate({
             // (a) Use your custom rules via the plugin's rules/messages
@@ -218,21 +51,26 @@
                 uName: {
                     required: true,
                     minlength: MIN_USERNAME_LENGTH,
+                    maxlength: MAX_USERNAME_LENGTH,
                     pattern: USERNAME_PATTERN
                 },
                 pwd: {
                     required: true,
-                    minlength: MIN_PASSWORD_LENGTH
+                    minlength: MIN_PASSWORD_LENGTH,
+                    maxlength: MAX_PASSWORD_LENGTH
                 }
             },
             messages: {
                 uName: {
                     required: "Username is required",
-                    minlength: `At least ${MIN_USERNAME_LENGTH} chars`
+                    minlength: `At least ${MIN_USERNAME_LENGTH} characters`,
+                    maxlength: `Username cannot exceed ${MAX_USERNAME_LENGTH} characters.`
                 },
                 pwd: {
                     required: "Password is required",
-                    minlength: `At least ${MIN_PASSWORD_LENGTH} chars`
+                    minlength: `At least ${MIN_PASSWORD_LENGTH} characters`,
+                    maxlength: `Password cannot exceed ${MAX_USERNAME_LENGTH} characters.`
+
                 }
             },
 
@@ -251,8 +89,10 @@
                         $("#resultArea").html(msg);
 
                         if (html.find("#shouldClear").html() === "true") {
-                            form.reset();
                             $("#welcome-message").html("Welcome, " + $("input[name=uName]").val());
+                            form.reset();
+                            $("#loginForm").hide();
+                            $("#loginSuccess").show();
                         } else {
                             $("#welcome-message").html("Welcome Guest");
                         }
@@ -271,80 +111,124 @@
             rules: {
                 uName: {
                     required: true,
-                    minlength: 5,
-                    pattern: /^[a-zA-Z0-9]+$/  // Allow alphanumeric usernames only
+                    minlength: MIN_USERNAME_LENGTH,
+                    maxlength: MAX_USERNAME_LENGTH,
+                    pattern: USERNAME_PATTERN
                 },
                 fName: {
                     required: true,
-                    minlength: 2
+                    minlength: MIN_FNAME_LENGTH,
+                    maxlength: MAX_FNAME_LENGTH,
+                    pattern: NAME_PATTERN
                 },
                 lName: {
                     required: true,
-                    minlength: 2
+                    minlength: MIN_LNAME_LENGTH,
+                    maxlength: MAX_LNAME_LENGTH,
+                    pattern: NAME_PATTERN
                 },
                 age: {
                     required: true,
-                    min: 18,
-                    max: 120
+                    min: MIN_AGE,
+                    max: MAX_AGE,
+                    pattern: NUMERIC_PATTERN  // Ensure only numbers are entered
                 },
                 email: {
                     required: true,
-                    email: true
+                    email: true,
+                    minlength: MIN_EMAIL_LENGTH,
+                    maxlength: MAX_EMAIL_LENGTH,
+                    pattern: EMAIL_PATTERN
                 },
                 pwd: {
                     required: true,
-                    minlength: 8
+                    minlength: MIN_PASSWORD_LENGTH,
+                    maxlength: MAX_PASSWORD_LENGTH
                 },
                 pwd1: {
                     required: true,
-                    minlength: 8,
+                    minlength: MIN_PASSWORD_LENGTH,
+                    maxlength: MAX_PASSWORD_LENGTH,
                     equalTo: "#password"  // Ensure passwords match
                 },
                 phoneNum: {
                     required: true,
-                    minlength: 9
+                    minlength: 9,
+                    maxlength: MAX_PHONE_LENGTH,
+                    pattern: PHONE_PATTERN  // Ensure phone number is valid
                 },
                 city: {
+                    required: true
+                },
+                yearBorn: {
+                    required: true,
+                    min: MIN_YEAR_BORN,
+                    max: MAX_YEAR_BORN,
+                    pattern: NUMERIC_PATTERN  // Ensure only numbers are entered
+                },
+                prefix: {
                     required: true
                 }
             },
             messages: {
                 uName: {
                     required: "Please enter a username.",
-                    minlength: "Your username must be at least 5 characters long."
+                    minlength: `Username must be at least ${MIN_USERNAME_LENGTH} characters long.`,
+                    maxlength: `Username cannot exceed ${MAX_USERNAME_LENGTH} characters.`,
+                    pattern: ERROR_MESSAGES.username
                 },
                 fName: {
                     required: "Please enter your first name.",
-                    minlength: "Your first name must be at least 2 characters long."
+                    minlength: `First name must be at least ${MIN_FNAME_LENGTH} characters long.`,
+                    maxlength: `First name cannot exceed ${MAX_FNAME_LENGTH} characters.`,
+                    pattern: ERROR_MESSAGES.name
                 },
                 lName: {
                     required: "Please enter your last name.",
-                    minlength: "Your last name must be at least 2 characters long."
+                    minlength: `Last name must be at least ${MIN_LNAME_LENGTH} characters long.`,
+                    maxlength: `Last name cannot exceed ${MAX_LNAME_LENGTH} characters.`,
+                    pattern: ERROR_MESSAGES.name
                 },
                 age: {
                     required: "Please enter your age.",
-                    min: "You must be at least 18 years old.",
-                    max: "Please enter a valid age."
+                    min: `Age must be at least ${MIN_AGE} years.`,
+                    max: `Age must be less than ${MAX_AGE} years.`,
+                    pattern: "Please enter a valid number for age."
                 },
                 email: {
                     required: "Please enter a valid email address.",
-                    email: "Please enter a valid email address."
+                    email: ERROR_MESSAGES.email,
+                    minlength: `Email must be at least ${MIN_EMAIL_LENGTH} characters long.`,
+                    maxlength: `Email cannot exceed ${MAX_EMAIL_LENGTH} characters.`
                 },
                 pwd: {
                     required: "Please provide a password.",
-                    minlength: "Your password must be at least 8 characters long."
+                    minlength: `Password must be at least ${MIN_PASSWORD_LENGTH} characters long.`,
+                    maxlength: `Password cannot exceed ${MAX_PASSWORD_LENGTH} characters.`
                 },
                 pwd1: {
                     required: "Please re-enter your password.",
-                    minlength: "Your password must be at least 8 characters long.",
+                    minlength: `Password must be at least ${MIN_PASSWORD_LENGTH} characters long.`,
+                    maxlength: `Password cannot exceed ${MAX_PASSWORD_LENGTH} characters.`,
                     equalTo: "Passwords do not match."
                 },
                 phoneNum: {
                     required: "Please enter your phone number.",
-                    minlength: "Phone number must be at least 9 digits."
+                    minlength: "Phone number must be at least 9 digits.",
+                    maxlength: `Phone number cannot exceed ${MAX_PHONE_LENGTH} digits.`,
+                    pattern: ERROR_MESSAGES.phone
+                },
+                yearBorn: {
+                    required: "Please enter your year of birth.",
+                    min: `Year of birth must be after ${MIN_YEAR_BORN}.`,
+                    max: `Year of birth must be before ${MAX_YEAR_BORN}.`,
+                    pattern: "Please enter a valid year."
                 },
                 city: {
                     required: "Please select a city."
+                },
+                prefix: {
+                    required: "Please enter a valid prefix."
                 }
             },
             submitHandler: function (form) {
@@ -361,8 +245,10 @@
                         $("#resultArea").html(msg);  // Update the result area with server response
 
                         if (html.find("#shouldClear").html() === "true") {
-                            form.reset();  // Clear the form if necessary
                             $("#welcome-message").html("Welcome, " + $("input[name=uName]").val());
+                            form.reset();  // Clear the form if necessary
+                            $("#signupForm").hide();
+                            $("#signupSuccess").show();
                         } else {
                             $("#welcome-message").html("Welcome Guest");
                         }
@@ -376,5 +262,160 @@
             }
         });
     }
-    console.log("Validation script successfully applied.");
+    if ($("#update").length) {
+        // 1) Validate the form when it is submitted
+        $("#update").validate({
+            rules: {
+                uName: {
+                    required: true,
+                    minlength: MIN_USERNAME_LENGTH,
+                    maxlength: MAX_USERNAME_LENGTH,
+                    pattern: USERNAME_PATTERN
+                },
+                fName: {
+                    required: true,
+                    minlength: MIN_FNAME_LENGTH,
+                    maxlength: MAX_FNAME_LENGTH,
+                    pattern: NAME_PATTERN
+                },
+                lName: {
+                    required: true,
+                    minlength: MIN_LNAME_LENGTH,
+                    maxlength: MAX_LNAME_LENGTH,
+                    pattern: NAME_PATTERN
+                },
+                age: {
+                    required: true,
+                    min: MIN_AGE,
+                    max: MAX_AGE,
+                    pattern: NUMERIC_PATTERN  // Ensure only numbers are entered
+                },
+                email: {
+                    required: true,
+                    email: true,
+                    minlength: MIN_EMAIL_LENGTH,
+                    maxlength: MAX_EMAIL_LENGTH,
+                    pattern: EMAIL_PATTERN
+                },
+                pwd: {
+                    required: true,
+                    minlength: MIN_PASSWORD_LENGTH,
+                    maxlength: MAX_PASSWORD_LENGTH
+                },
+                pwd1: {
+                    required: true,
+                    minlength: MIN_PASSWORD_LENGTH,
+                    maxlength: MAX_PASSWORD_LENGTH,
+                    equalTo: "#pwd"  // Ensure passwords match
+                },
+                phoneNum: {
+                    required: true,
+                    minlength: 9,
+                    maxlength: MAX_PHONE_LENGTH,
+                    pattern: PHONE_PATTERN  // Ensure phone number is valid
+                },
+                city: {
+                    required: true
+                },
+                yearBorn: {
+                    required: true,
+                    min: MIN_YEAR_BORN,
+                    max: MAX_YEAR_BORN,
+                    pattern: NUMERIC_PATTERN  // Ensure only numbers are entered
+                },
+                prefix: {
+                    required: true
+                }
+            },
+            messages: {
+                uName: {
+                    required: "Please enter a username.",
+                    minlength: `Username must be at least ${MIN_USERNAME_LENGTH} characters long.`,
+                    maxlength: `Username cannot exceed ${MAX_USERNAME_LENGTH} characters.`,
+                    pattern: ERROR_MESSAGES.username
+                },
+                fName: {
+                    required: "Please enter your first name.",
+                    minlength: `First name must be at least ${MIN_FNAME_LENGTH} characters long.`,
+                    maxlength: `First name cannot exceed ${MAX_FNAME_LENGTH} characters.`,
+                    pattern: ERROR_MESSAGES.name
+                },
+                lName: {
+                    required: "Please enter your last name.",
+                    minlength: `Last name must be at least ${MIN_LNAME_LENGTH} characters long.`,
+                    maxlength: `Last name cannot exceed ${MAX_LNAME_LENGTH} characters.`,
+                    pattern: ERROR_MESSAGES.name
+                },
+                age: {
+                    required: "Please enter your age.",
+                    min: `Age must be at least ${MIN_AGE} years.`,
+                    max: `Age must be less than ${MAX_AGE} years.`,
+                    pattern: "Please enter a valid number for age."
+                },
+                email: {
+                    required: "Please enter a valid email address.",
+                    email: ERROR_MESSAGES.email,
+                    minlength: `Email must be at least ${MIN_EMAIL_LENGTH} characters long.`,
+                    maxlength: `Email cannot exceed ${MAX_EMAIL_LENGTH} characters.`
+                },
+                pwd: {
+                    required: "Please provide a password.",
+                    minlength: `Password must be at least ${MIN_PASSWORD_LENGTH} characters long.`,
+                    maxlength: `Password cannot exceed ${MAX_PASSWORD_LENGTH} characters.`
+                },
+                pwd1: {
+                    required: "Please re-enter your password.",
+                    minlength: `Password must be at least ${MIN_PASSWORD_LENGTH} characters long.`,
+                    maxlength: `Password cannot exceed ${MAX_PASSWORD_LENGTH} characters.`,
+                    equalTo: "Passwords do not match."
+                },
+                phoneNum: {
+                    required: "Please enter your phone number.",
+                    minlength: "Phone number must be at least 9 digits.",
+                    maxlength: `Phone number cannot exceed ${MAX_PHONE_LENGTH} digits.`,
+                    pattern: ERROR_MESSAGES.phone
+                },
+                yearBorn: {
+                    required: "Please enter your year of birth.",
+                    min: `Year of birth must be after ${MIN_YEAR_BORN}.`,
+                    max: `Year of birth must be before ${MAX_YEAR_BORN}.`,
+                    pattern: "Please enter a valid year."
+                },
+                city: {
+                    required: "Please select a city."
+                },
+                prefix: {
+                    required: "Please enter a valid prefix."
+                }
+            },
+            submitHandler: function (form) {
+                // Prevent form submission (handled by AJAX)
+                const formData = $(form).serialize();  // Serialize form data for submission
+
+                $.ajax({
+                    type: "POST",
+                    url: "update.aspx",  // Your server-side signup handler
+                    data: formData,
+                    success: function (response) {
+                        const html = $(response);
+                        const msg = html.find("#resultArea").html();  // Assuming you have an area for this
+                        $("#resultArea").html(msg);  // Update the result area with server response
+
+                        if (html.find("#shouldClear").html() === "true") {
+                            $("#welcome-message").html("Welcome, " + $("input[name=uName]").val());
+                            form.reset();  // Clear the form if necessary
+                            $("#updateForm").hide();
+                            $("#updateSuccess").show();
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle errors
+                        $("#resultArea").html("Error: " + error);
+                    }
+                });
+                return false;  // Prevent normal form submission
+            }
+        });
+    }
+console.log("Validation script successfully applied.");
 });

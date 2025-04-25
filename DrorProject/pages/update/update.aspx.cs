@@ -46,14 +46,11 @@ namespace DrorProject.pages.update
                             HelperA.DoQuery(dbName, update);
                             message = "Successfully updated!";
                             Session["loggedUser"] = username;
-
-                            Application["loggedUsers"] = Application["loggedUsers"].ToString().Replace(user, username);
-
-                            Response.Redirect("../main.aspx");
+                            shouldClear.InnerHtml = "true";
                         }
                         else
                         {
-                            message = "Wrong password.";
+                            message = "Passwords do not match.";
                         }
                     }
                 }
@@ -107,13 +104,13 @@ namespace DrorProject.pages.update
             string password = Request.Form["pwd"];
             string fName = Request.Form["fName"];
             string lName = Request.Form["lName"];
-            string email = Request.Form["emmail"];
+            string email = Request.Form["email"];
             bool gender = bool.Parse(Request.Form["gender"]);
             string prefix = Request.Form["phonePrefix"];
             string phoneNum = Request.Form["phoneNum"];
-            string city = Request.Form["citty"];
+            string city = Request.Form["city"];
             string hobby = Request.Form["hobby"];
-            string age = Request.Form["mage"];
+            string age = Request.Form["age"];
 
             username = symbolErrorFix(username);
             password = symbolErrorFix(password);
