@@ -12,7 +12,6 @@ namespace DrorProject.pages.admin
 {
     public partial class adminUpd : System.Web.UI.Page
     {
-        public string data = "";
         public string message = "";
         private string dbName = drorCommands.dbName;
 
@@ -50,15 +49,21 @@ namespace DrorProject.pages.admin
                             {
                                 HelperA.DoQuery(dbName, update);
                                 message = "Successfully updated!";
+                                shouldClear.InnerHtml = "true";
                             }
                             Session["AdminUpdate"] = null;
                             Session["AdminUpdateName"] = null;
-                            Response.Redirect("~/pages/admin/printDB.aspx");
                         }
                         else
                         {
                             message = "Wrong password.";
+                            shouldClear.InnerHtml = "false";
                         }
+                    }
+                    else
+                    {
+                        message= "Username already exists.";
+                        shouldClear.InnerHtml = "false";
                     }
                 }
             }
@@ -110,13 +115,13 @@ namespace DrorProject.pages.admin
             string username = Request.Form["uName"];
             string fName = Request.Form["fName"];
             string lName = Request.Form["lName"];
-            string email = Request.Form["emmail"];
+            string email = Request.Form["email"];
             bool gender = bool.Parse(Request.Form["gender"]);
             string prefix = Request.Form["phonePrefix"];
             string phoneNum = Request.Form["phoneNum"];
-            string city = Request.Form["citty"];
+            string city = Request.Form["city"];
             string hobby = Request.Form["hobby"];
-            string age = Request.Form["mage"];
+            string age = Request.Form["age"];
 
             username = symbolErrorFix(username);
             password = symbolErrorFix(password);

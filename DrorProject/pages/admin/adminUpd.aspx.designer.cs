@@ -15,12 +15,21 @@ namespace DrorProject.pages.admin
     {
 
         /// <summary>
-        /// update control.
+        /// adminUpdate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm update;
+        protected global::System.Web.UI.HtmlControls.HtmlForm adminUpdate;
+
+        /// <summary>
+        /// shouldClear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl shouldClear;
     }
 }
